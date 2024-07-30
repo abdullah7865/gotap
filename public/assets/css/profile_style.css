@@ -1,0 +1,24 @@
+body {
+  margin: 0%;
+  padding: 0%;
+}
+
+.cover {
+  background-image: url("/assets/img/cover.jpg");
+  height: 390px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.dp {
+  height: 150px;
+  width: 150px;
+}
+
+.dp img {
+  height: 100%;
+  width: 100%;
+  border: 8px solid #fff;
+  margin-top: -40px;
+}

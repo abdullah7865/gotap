@@ -1,0 +1,104 @@
+/* 1 */
+.photo-input {
+    position: absolute;
+    left: -9999px;
+}
+
+.photo-upload {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.photo-upload > span {
+    display: inline-block;
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+.photo-upload:hover > span {
+    color: #fff;
+}
+
+.photo-upload > input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.photo-upload:hover {
+    background-color: #0069d9;
+}
+
+/* 2 */
+.photo_cover-input {
+    position: absolute;
+    left: -9999px;
+}
+
+.photo_cover-upload {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.photo_cover-upload > span {
+    display: inline-block;
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+.photo_cover-upload:hover > span {
+    color: #fff;
+}
+
+.photo_cover-upload > input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.photo_cover-upload:hover {
+    background-color: #0069d9;
+}
+
+/* 3 */
+.icon-input {
+    position: absolute;
+    left: -9999px;
+}
+
+.icon-upload {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.icon-upload > span {
+    display: inline-block;
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+.icon-upload:hover > span {
+    color: #fff;
+}
+
+.icon-upload > input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.icon-upload:hover {
+    background-color: #0069d9;
+}
