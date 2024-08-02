@@ -24,16 +24,16 @@ class PlatformResource extends JsonResource
             'placeholder_sv' => $this->placeholder_sv ?? null,
             'description_en' => $this->description_en ?? null,
             'description_sv' => $this->description_sv ?? null,
-            'created_at' => defaultDateFormat($this->created_at) ?? null,
+            // 'created_at' => defaultDateFormat($this->created_at) ?? null,
             'path' => $this->path ?? null,
             'label' => $this->label ?? null,
             'direct' => $this->direct ?? null,
         ];
-        
-        if(request()->segment(2) == 'profile') {
+
+        if (request()->segment(2) == 'profile') {
             $data['saved'] = 1;
         }
-        
+
         return $data;
     }
 }

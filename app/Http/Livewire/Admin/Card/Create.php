@@ -20,7 +20,17 @@ class Create extends Component
     {
         return [
             'description' => 'sometimes',
-            'quantity' => 'numeric|min:1'
+            'quantity'    => 'numeric|required|min:1',
+        ];
+    }
+
+    protected function messages()
+    {
+        return [
+            'description.sometimes' => 'sometimes',
+            'quantity.required'     =>  'required',
+            'quantity.numeric'      => 'numeric',
+            'quantity.min'          => 'min:1',
         ];
     }
 

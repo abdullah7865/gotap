@@ -43,10 +43,10 @@ Route::get('/testing', function () {
     dd("testing");
 });
 
-Route::get('/', function () {
-    dd(bcrypt(11223344));
-    return view('landingpage.index');
-});
+// Route::get('/', function () {
+//     dd(bcrypt(11223344));
+//     return view('landingpage.index');
+// });
 
 Route::get('/privacy-and-policy', function () {
     return view('landingpage.privacy-policy');

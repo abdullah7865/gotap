@@ -15,50 +15,53 @@ use App\Http\Resources\Api\PlatformResource;
 
 class PlatformController extends Controller
 {
-    
+
     /**
      * Search Platform
      **/
     public function search(Request $request)
     {
         $platforms = [];
-        if($request->title) {
-            $platforms = Platform::where('title', 'like', '%'.$request->title.'%')->get();
+        if ($request->title) {
+            $platforms = Platform::where('title', 'like', '%' . $request->title . '%')->get();
         }
-        
+
         return response()->json(
             [
                 'platforms' => PlatformResource::collection($platforms)
             ]
         );
     }
-    
-    
+
+
     /**
      * Platform By Id
      **/
-     public function details(Request $request)
+    public function details(Request $request)
     {
-        
+
         $platform = Platform::find($request->id);
-        
-        if(!$platform) {
+
+        if (!$platform) {
             return response()->json(['message' => 'Platform not found']);
         }
-        
+
         return response()->json(
             [
                 'platforms' => new PlatformResource($platform)
             ]
         );
     }
-    
+
     public function add(AddPlatformRequest $request)
     {
-        
+
         $platform = Platform::where('id', $request->platform_id)->where('status', 1)->first();
         if (!$platform) {
-            return response()->json(['message' => trans('backend.platform_not_found')]);
+            return response()->json([
+                'status' => 400,
+                'message' => trans('backend.platform_not_found')
+            ]);
         }
 
         $baseUrl = $platform->baseURL;
@@ -74,10 +77,10 @@ class PlatformController extends Controller
             ->first();
 
         try {
-            // update platform
+
             if ($user_platform) {
                 $path = $request->path;
-               
+
                 DB::table('user_platforms')
                     ->where('platform_id', $request->platform_id)
                     ->where('user_id', auth()->id())
@@ -88,7 +91,10 @@ class PlatformController extends Controller
 
                 $userPlatform = $this->userPlatform($request->platform_id);
                 if ($userPlatform) {
-                    return response()->json(['message' => trans('backend.platform_updated_success'), 'data' => $userPlatform]);
+                    return response()->json([
+                        'status' => 200,
+                        'message' => trans('backend.platform_updated_success'), 'data' => $userPlatform
+                    ]);
                 }
             } else {
                 // add platform
@@ -97,7 +103,7 @@ class PlatformController extends Controller
                     ->where('user_id', auth()->id())
                     ->latest()
                     ->first();
-                    
+
 
                 $userPlatform = DB::table('user_platforms')->insert([
                     'user_id' => auth()->id(),
@@ -109,11 +115,17 @@ class PlatformController extends Controller
                 ]);
 
                 $userPlatform = $this->userPlatform($request->platform_id);
-                return response()->json(["message" => trans('backend.platform_added_success'), 'data' => $userPlatform]);
+                return response()->json([
+                    "status" => 200,
+                    "message" => trans('backend.platform_added_success'), 'data' => $userPlatform
+                ]);
             }
         } catch (Exception $ex) {
-            
-            return response()->json(["message" => $ex->getMessage()]);
+
+            return response()->json([
+                "status" => 400,
+                "message" => $ex->getMessage()
+            ]);
         }
     }
 
@@ -127,14 +139,20 @@ class PlatformController extends Controller
             ->where('platform_id', $request->platform_id)
             ->first();
         if (!$platform) {
-            return response()->json(['message' => trans('backend.platform_not_found')]);
+            return response()->json([
+                'status' => 400,
+                'message' => trans('backend.platform_not_found')
+            ]);
         }
-        
+
         $platform = DB::table('user_platforms')
             ->where('user_id', auth()->id())
             ->where('platform_id', $request->platform_id)
             ->delete();
-        return response()->json(['message' => trans('backend.platform_removed_success')]);
+        return response()->json([
+            'status' => 200,
+            'message' => trans('backend.platform_removed_success')
+        ]);
     }
 
     /**
@@ -163,7 +181,10 @@ class PlatformController extends Controller
                 );
         }
 
-        return response()->json(['message' => trans("Order swapped successfully")]);
+        return response()->json([
+            'status' => 200,
+            'message' => trans("Order swapped successfully")
+        ]);
     }
 
     /**
@@ -180,15 +201,15 @@ class PlatformController extends Controller
         }
 
         try {
-            
+
             DB::table('user_platforms')
                 ->where('user_id', auth()->id())
-                ->where('platform_id', '!=' ,$request->platform_id)
+                ->where('platform_id', '!=', $request->platform_id)
                 ->where('direct', 1)
                 ->update([
                     'direct' => 0
                 ]);
-            
+
             DB::table('user_platforms')
                 ->where('user_id', auth()->id())
                 ->where('platform_id', $request->platform_id)
@@ -250,7 +271,7 @@ class PlatformController extends Controller
 
         return $userPlatform;
     }
-    
+
     private function formatUrl($userInput)
     {
         // Check if the input contains "http://" or "https://"

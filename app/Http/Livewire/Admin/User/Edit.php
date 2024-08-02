@@ -49,17 +49,39 @@ class Edit extends Component
     protected function rules()
     {
         return [
-            'name'                  =>        ['sometimes'],
-            'email'                 =>        ['required', 'email'],
-            'photo'                 =>        ['nullable', 'mimes:jpeg,jpg,png', 'max:2000'],
-            'cover_photo'           =>        ['nullable', 'mimes:jpeg,jpg,png', 'max:2000'],
-            'username'              =>        ['required'],
-            'job_title'             =>        ['sometimes'],
-            'phone'                 =>        ['sometimes'],
-            'company'               =>        ['sometimes'],
-            'bio'                   =>        ['sometimes'],
-            'verified'              =>        ['sometimes'],
-            'featured'              =>        ['sometimes']
+            'name'         => ['sometimes'],
+            'email'        => ['required', 'email'],
+            'photo'        => ['nullable', 'mimes:jpeg,jpg,png', 'max:2000'],
+            'cover_photo'  => ['nullable', 'mimes:jpeg,jpg,png', 'max:2000'],
+            'username'     => ['required'],
+            'job_title'    => ['sometimes'],
+            'phone'        => ['sometimes'],
+            'company'      => ['sometimes'],
+            'bio'          => ['sometimes'],
+            'verified'     => ['sometimes', 'not_in:-1'],
+            'featured'     => ['sometimes', 'not_in:'],
+        ];
+    }
+
+    protected function messages()
+    {
+        return [
+            'name.sometimes'          => 'The name field is optional.',
+            'email.required'          => 'The email field is required.',
+            'email.email'             => 'The email must be a valid email address.',
+            'photo.mimes'             => 'The photo must be a file of type: jpeg, jpg, png.',
+            'photo.max'               => 'The photo may not be greater than 2000 kilobytes.',
+            'cover_photo.mimes'       => 'The cover photo must be a file of type: jpeg, jpg, png.',
+            'cover_photo.max'         => 'The cover photo may not be greater than 2000 kilobytes.',
+            'username.required'       => 'The username field is required.',
+            'job_title.sometimes'     => 'The job title field is optional.',
+            'phone.sometimes'         => 'The phone field is optional.',
+            'company.sometimes'       => 'The company field is optional.',
+            'bio.sometimes'           => 'The bio field is optional.',
+            'verified.sometimes'      => 'The verified field is optional.',
+            'verified.not_in'         => 'The selected value for verified is invalid.',
+            'featured.sometimes'      => 'The featured field is optional.',
+            'featured.not_in'         => 'The selected value for featured is invalid.',
         ];
     }
 

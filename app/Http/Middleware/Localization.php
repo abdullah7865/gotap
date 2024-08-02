@@ -16,9 +16,7 @@ class Localization
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd("working");
-         // Check header request and determine localizaton
-        $local = ($request->hasHeader('lang')) ? $request->header('lang') : 'es';
+        $local = ($request->hasHeader('lang')) ? $request->header('lang') : 'en';
         // set laravel localization
         app()->setLocale($local);
         // continue request

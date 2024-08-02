@@ -152,10 +152,13 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        Verified
+                                        Verified <span class="text-danger"> * </span>
+                                        @error('verified')
+                                            <span class="text-danger error-message">{{ $message }}</span>
+                                        @enderror
                                     </label>
                                     <select class="form-select" wire:model="verified">
-                                        <option selected="">Select</option>
+                                        <option value="-1" selected="">Select</option>
                                         <option value="0">No</option>
                                         <option value="1">Yes</option>
                                     </select>
@@ -166,10 +169,13 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label class="form-label">
-                                        Show In all Users
+                                        Show In All Users <span class="text-danger"> * </span>
+                                        @error('featured')
+                                            <span class="text-danger error-message">{{ $message }}</span>
+                                        @enderror
                                     </label>
                                     <select class="form-select" wire:model="featured">
-                                        <option selected="">Select</option>
+                                        <option value="" selected="">Select</option>
                                         <option value="0">No</option>
                                         <option value="1">Yes</option>
                                     </select>

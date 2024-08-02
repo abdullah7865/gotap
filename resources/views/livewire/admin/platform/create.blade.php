@@ -62,7 +62,7 @@
                                         @enderror
                                     </label>
                                     <select class="form-select" wire:model="category_id">
-                                        <option selected="">Select</option>
+                                        <option value="" selected="">Select</option>
                                         @foreach ($categories as $val => $category)
                                             <option value="{{ $val }}"> {{ $category }} </option>
                                         @endforeach
@@ -80,7 +80,7 @@
                                         @enderror
                                     </label>
                                     <select class="form-select" wire:model="pro">
-                                        <option selected="">Select</option>
+                                        <option value="" selected="">Select</option>
                                         <option value="1">Pro</option>
                                         <option value="0">Free</option>
                                     </select>
@@ -95,7 +95,7 @@
                                         @enderror
                                     </label>
                                     <select class="form-select" wire:model="status">
-                                        <option selected="">Select</option>
+                                        <option value="" selected="">Select</option>
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>
@@ -161,7 +161,7 @@
                                         @enderror
                                     </label>
                                     <select class="form-select" wire:model="input">
-                                        <option selected="">Select</option>
+                                        <option value="" selected="">Select</option>
                                         <option value="email">Email</option>
                                         <option value="phone">Phone</option>
                                         <option value="username">Username</option>

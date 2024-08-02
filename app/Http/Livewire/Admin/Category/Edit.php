@@ -15,9 +15,20 @@ class Edit extends Component
     protected function rules()
     {
         return [
-            'name'                  =>        ['required'],
-            'name_sv'               =>        ['required'],
-            'status'                =>        ['required'],
+            'name'    => ['required'],
+            'name_sv' => ['required'],
+            'status'  => ['required','not_in:'],
+        ];
+    }
+
+    protected function messages()
+    {
+        return [
+            'name.required'    => 'required',
+            'name_sv.required' => 'required',
+            'status.required'  => 'required',
+            'status.not_in' => 'Invalid status selected',
+
         ];
     }
 

@@ -21,7 +21,10 @@ class ConnectController extends Controller
             ->first();
 
         if (!$connection) {
-            return response()->json(['message' => trans('backend.connection_not_found')]);
+            return response()->json([
+                'status' => 400,
+                'message' => trans('backend.connection_not_found')
+            ]);
         }
 
         // check
@@ -30,7 +33,10 @@ class ConnectController extends Controller
             ->where('connecting_id', auth()->id())
             ->first();
         if ($connected) {
-            return response()->json(['message' => trans('backend.already_connected')]);
+            return response()->json([
+                'status' => 400,
+                'message' => trans('backend.already_connected')
+            ]);
         }
 
         try {
@@ -38,7 +44,10 @@ class ConnectController extends Controller
                 'connected_id' => $request->connect_id,
                 'connecting_id' => auth()->id()
             ]);
-            return response()->json(['message' => trans('backend.connected_success')]);
+            return response()->json([
+                'status' => 200,
+                'message' => trans('backend.connected_success')
+            ]);
         } catch (Exception $ex) {
             return response()->json(['message' => $ex->getMessage()]);
         }

@@ -41,7 +41,7 @@
                                         @enderror
                                     </label>
                                     <select class="form-select" wire:model="status">
-                                        <option selected="">Select</option>
+                                        <option value="" selected="">Select</option>
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>

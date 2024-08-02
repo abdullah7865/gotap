@@ -26,14 +26,14 @@ class ContactDetailsRequest extends FormRequest
     public function rules()
     {
         return [
-            'contact_id' => ['required']
+            'id' => ['required']
         ];
     }
 
     public function messages()
     {
         return [
-            'contact_id.required' => trans('validation.contact_id_required')
+            'id.required' => trans('validation.contact_id_required')
         ];
     }
 }

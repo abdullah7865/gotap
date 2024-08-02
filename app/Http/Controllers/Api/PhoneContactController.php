@@ -21,14 +21,20 @@ class PhoneContactController extends Controller
      */
     public function index()
     {
-        
+
         $contacts = DB::table('phone_contacts')
             ->where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return response()->json(['total_contacts' => $contacts->count(), 'contacts' => ContactResource::collection($contacts)]);
-        
+        return response()->json(
+            [
+                "status" => 200,
+                "message" => "Phone Contacts",
+                'data' => ContactResource::collection($contacts)
+            ],
+
+        );
     }
 
     /**
@@ -81,7 +87,13 @@ class PhoneContactController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
 
-        return response()->json(['message' => trans('backend.phone_conact_added_success'), 'contactDetails' => new ContactResource($data)]);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => trans('backend.phone_conact_added_success'),
+                'data' => new ContactResource($data),
+            ]
+        );
     }
 
     /**
@@ -91,7 +103,12 @@ class PhoneContactController extends Controller
     {
         $contact = DB::table('phone_contacts')->where('id', $request->contact_id)->first();
         if (!$contact) {
-            return response()->json(['message' => trans('backend.phone_contact_not_found')]);
+            return response()->json(
+                [
+                    'status' => 400,
+                    'message' => trans('backend.phone_contact_not_found')
+                ]
+            );
         }
 
         try {
@@ -123,9 +140,20 @@ class PhoneContactController extends Controller
             ]);
 
             $contact = DB::table('phone_contacts')->where('id', $request->contact_id)->first();
-            return response()->json(['message' => trans('backend.phone_contact_updated_success'), 'contactDetails' => new ContactResource($contact)]);
+            return response()->json(
+                [
+                    'status' => 200,
+                    'message' => trans('backend.phone_contact_updated_success'),
+                    'data' => new ContactResource($contact)
+                ]
+            );
         } catch (Exception $ex) {
-            return response()->json(['message' => $ex->getMessage()]);
+            return response()->json(
+                [
+                    'status' => 400,
+                    'message' => $ex->getMessage()
+                ]
+            );
         }
     }
 
@@ -136,12 +164,23 @@ class PhoneContactController extends Controller
     {
         $platform = DB::table('phone_contacts')
             ->where('user_id', auth()->id())
-            ->where('id', $request->contact_id)
+            ->where('id', $request->id)
             ->delete();
         if (!$platform) {
-            return response()->json(['message' => trans('backend.phone_contact_not_found')]);
+            return response()->json(
+                [
+                    'status' => 400,
+                    'message' => trans('backend.phone_contact_not_found')
+                ],
+            );
         }
 
-        return response()->json(['message' => trans('backend.phone_contact_deleted_success')]);
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => trans('backend.phone_contact_deleted_success')
+            ],
+
+        );
     }
 }

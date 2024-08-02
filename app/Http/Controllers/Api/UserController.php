@@ -21,9 +21,15 @@ class UserController extends Controller
                 ->where('connecting_id', auth()->id())
                 ->delete();
             if ($deleted) {
-                return response()->json(['message' => trans('backend.connection_removed')]);
+                return response()->json([
+                    'status'  => 200,
+                    'message' => trans('backend.connection_removed')
+                ]);
             } else {
-                return response()->json(['message' => trans('backend.connection_removed_fails')]);
+                return response()->json([
+                    'status' => 400,
+                    'message' => trans('backend.connection_removed_fails')
+                ]);
             }
         }
         $connect = DB::table('connects')->insert([
@@ -31,9 +37,15 @@ class UserController extends Controller
             'connecting_id' => auth()->id()
         ]);
         if ($connect) {
-            return response()->json(['message' => trans('backend.connection_success')]);
+            return response()->json([
+                'status'  => 200,
+                'message' => trans('backend.connection_success')
+            ]);
         }
-        return response()->json(['message' => trans('backend.connection_removed_fails')]);
+        return response()->json([
+            'status' => 400,
+            'message' => trans('backend.connection_removed_fails')
+        ]);
     }
 
     /**
@@ -53,7 +65,10 @@ class UserController extends Controller
                 );
 
             $user = User::find(auth()->id());
-            return response()->json(['message' => trans('backend.profile_set_public'), 'profile' => new ProfileResource($user)]);
+            return response()->json([
+                'status' => 200,
+                'message' => trans('backend.profile_set_public'), 'data' => new ProfileResource($user)
+            ]);
         }
 
         User::where('id', auth()->id())
@@ -63,7 +78,10 @@ class UserController extends Controller
                 ]
             );
         $user = User::find(auth()->id());
-        return response()->json(['message' => trans('backend.profile_set_private'), 'profile' => new ProfileResource($user)]);
+        return response()->json([
+            'status' => 200,
+            'message' => trans('backend.profile_set_private'), 'data' => new ProfileResource($user)
+        ]);
     }
 
     /**
@@ -88,11 +106,14 @@ class UserController extends Controller
         );
         if ($updated) {
             $message = trans('backend.account_will_delete');
-            return response()->json(['message' => $message]);
+            return response()->json([
+                'status' => 200,
+                'message' => $message
+            ]);
         }
         return response()->json(['message' => trans('backend.something_wrong')]);
     }
-    
+
     /**
      * Delete Account
      */
