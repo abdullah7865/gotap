@@ -206,12 +206,21 @@ class AuthController extends Controller
                 ]
             );
             if ($updated) {
-                return response()->json(['message' => trans('backend.account_recovered')]);
+                return response()->json([
+                    'status' => 200,
+                    'message' => trans('backend.account_recovered')
+                ]);
             }
         } else {
-            return response()->json(['message' => trans('backend.account_already_activated')]);
+            return response()->json([
+                'status'  => 200,
+                'message' => trans('backend.account_already_activated')
+            ]);
         }
-        return response()->json(['message' => trans('backend.something_wrong')]);
+        return response()->json([
+            'status'  => 400,
+            'message' => trans('backend.something_wrong')
+        ]);
     }
 
     /**

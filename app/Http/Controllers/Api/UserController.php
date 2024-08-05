@@ -89,7 +89,7 @@ class UserController extends Controller
      */
     public function deactivateAccount()
     {
-        $user_groups = DB::table('user_group')
+        $user_groups = DB::table('user_groups')
             ->where('user_id', auth()->id())
             ->get();
 
@@ -111,7 +111,10 @@ class UserController extends Controller
                 'message' => $message
             ]);
         }
-        return response()->json(['message' => trans('backend.something_wrong')]);
+        return response()->json([
+            'status'  => 400,
+            'message' => trans('backend.something_wrong')
+        ]);
     }
 
     /**

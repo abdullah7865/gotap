@@ -33,6 +33,7 @@ Route::middleware('localization')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->middleware(['throttle:6,1']);
     Route::post('forgetPassword', [AuthController::class, 'forgotPassword'])->middleware(['throttle:6,1']);
     Route::post('resetPassword', [AuthController::class, 'resetPassword']);
+    Route::post('/recoverAccount', [AuthController::class, 'recoverAccount']);
 
     //old gotap
     // $router->post('/forgetPassword', [AuthController::class, 'forgetPassword']);
@@ -48,7 +49,7 @@ Route::middleware('localization')->group(function () {
             // Route::post('/connect', [UserController::class, 'connect']);
             Route::get('/analytics', [UserController::class, 'analytics']);
             Route::post('/privateProfile', [UserController::class, 'privateProfile']);
-            Route::post('/recoverAccount', [AuthController::class, 'recoverAccount']);
+
             Route::get('/deactivateAccount', [UserController::class, 'deactivateAccount']);
             Route::get('/delete', [UserController::class, 'deleteAccount']);
 

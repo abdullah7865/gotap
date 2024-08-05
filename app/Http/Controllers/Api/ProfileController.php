@@ -16,59 +16,29 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $categoriesWithPlatforms = DB::table('categories')
+        $platforms = DB::table('user_platforms')
             ->select(
-                'categories.id as category_id',
-                'categories.name as category_name',
-                'categories.name_sv as name_sv',
-                'platforms.id as platform_id',
+                'platforms.id',
                 'platforms.title',
                 'platforms.icon',
                 'platforms.input',
                 'platforms.baseUrl',
-                'platforms.category_id',
-                'platforms.placeholder_en',
-                'platforms.placeholder_sv',
-                'platforms.description_en',
-                'platforms.description_sv',
-                'platforms.created_at',
-                'platforms.updated_at'
+                'user_platforms.created_at',
+                'user_platforms.path',
+                'user_platforms.label',
+                'user_platforms.platform_order',
+                'user_platforms.direct',
             )
-            ->leftJoin('platforms', 'platforms.category_id', '=', 'categories.id')
-            ->get()
-            ->groupBy('category_id');
+            ->join('platforms', 'platforms.id', 'user_platforms.platform_id')
+            ->where('user_id', auth()->id())
+            ->orderBy(('user_platforms.platform_order'))
+            ->get();
 
-        // Transform the grouped data into a more structured format
-        $categories = $categoriesWithPlatforms->map(function ($platforms, $categoryId) {
-            return [
-                'category_id' => $categoryId,
-                'category_name' => $platforms->first()->category_name,
-                'name_sv' =>  $platforms->first()->name_sv,
-                'platforms' => $platforms->map(function ($platform) {
-                    return [
-                        'id' => $platform->platform_id,
-                        'title' => $platform->title,
-                        'icon' => $platform->icon,
-                        'input' => $platform->input,
-                        'baseUrl' => $platform->baseUrl,
-                        'category_id' => $platform->category_id,
-                        'placeholder_en' => $platform->placeholder_en,
-                        'placeholder_sv' => $platform->placeholder_sv,
-                        'description_en' => $platform->description_en,
-                        'description_sv' => $platform->description_sv,
-                        'created_at'     => $platform->created_at,
-                        'updated_at'     => $platform->updated_at,
-                    ];
-                }),
-            ];
-        });
 
         return response()->json(
             [
-                'status' => 200,
-                'message' => 'User Profile',
-                'data' => new ProfileResource(auth()->user()),
-                'categories' => $categories
+                'profile' => new ProfileResource(auth()->user()),
+                'platforms' => PlatformResource::collection($platforms)
             ]
         );
     }

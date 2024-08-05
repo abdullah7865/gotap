@@ -70,6 +70,16 @@ Route::get('/optimize', function () {
     dd("done");
 });
 
+Route::get('/key', function () {
+    Artisan::call('key:generate');
+    dd("key generated");
+});
+
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    dd("storage linked");
+});
+
 Route::get('/middleware', function () {
     Artisan::call('make:middleware Localization');
     dd("localization done");
@@ -134,7 +144,7 @@ Route::get('/card_id/{uuid}', function ($uuid) {
         return abort(404);
     }
 
-    if(!$user->card_status) {
+    if (!$user->card_status) {
         return abort(404);
     }
 
@@ -163,26 +173,25 @@ Route::get('/card_id/{uuid}', function ($uuid) {
         ->orderBy(('user_platforms.platform_order'))
         ->get();
 
-        if($user->user_direct){
-            $direct = $platforms->first();
-        }
+    if ($user->user_direct) {
+        $direct = $platforms->first();
+    }
 
-        // $direct = $platforms->filter(function ($platform) {
-        //     return $platform->direct == 1;
-        // });
+    // $direct = $platforms->filter(function ($platform) {
+    //     return $platform->direct == 1;
+    // });
 
-        // $direct = $direct->first();
+    // $direct = $direct->first();
 
-        if($direct) {
-            if(!$direct->base_url) {
-                if (!str_contains($direct->path, 'https') || !str_contains($direct->path, 'http')) {
-                    $directPath = 'https://' . $direct->path;
-                }
+    if ($direct) {
+        if (!$direct->base_url) {
+            if (!str_contains($direct->path, 'https') || !str_contains($direct->path, 'http')) {
+                $directPath = 'https://' . $direct->path;
             }
-            else {
-                $directPath = $direct->base_url . '/' . $direct->path;
-            }
+        } else {
+            $directPath = $direct->base_url . '/' . $direct->path;
         }
+    }
 
     User::find($user->id)->increment('tiks');
     $is_private = User::where('id', $user->id)->first()->private;
@@ -235,26 +244,25 @@ Route::get('/{username}', function ($username) {
         ->orderBy(('user_platforms.platform_order'))
         ->get();
 
-        if($user->user_direct){
-            $direct = $platforms->first();
-        }
+    if ($user->user_direct) {
+        $direct = $platforms->first();
+    }
 
-        // $direct = $platforms->filter(function ($platform) {
-        //     return $platform->direct == 1;
-        // });
+    // $direct = $platforms->filter(function ($platform) {
+    //     return $platform->direct == 1;
+    // });
 
-        // $direct = $direct->first();
+    // $direct = $direct->first();
 
-        if($direct) {
-            if(!$direct->base_url) {
-                if (!str_contains($direct->path, 'https') || !str_contains($direct->path, 'http')) {
-                    $directPath = 'https://' . $direct->path;
-                }
+    if ($direct) {
+        if (!$direct->base_url) {
+            if (!str_contains($direct->path, 'https') || !str_contains($direct->path, 'http')) {
+                $directPath = 'https://' . $direct->path;
             }
-            else {
-                $directPath = $direct->base_url . '/' . $direct->path;
-            }
+        } else {
+            $directPath = $direct->base_url . '/' . $direct->path;
         }
+    }
 
     User::find($user->id)->increment('tiks');
     $is_private = User::where('id', $user->id)->first()->private;
