@@ -42,6 +42,7 @@ class PhoneContactController extends Controller
      */
     public function phoneContact(ContactDetailsRequest $request)
     {
+        // get phone contact
         $contact = DB::table('phone_contacts')
             ->where('user_id', auth()->id())
             ->where('id', $request->id)
