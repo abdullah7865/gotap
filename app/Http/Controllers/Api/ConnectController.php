@@ -109,6 +109,7 @@ class ConnectController extends Controller
             'connection.job_title as connection_job_title',
             'connection.company as connection_company',
             'connection.photo as connection_photo',
+            'connection.verified as verified',
         )
             ->join('connects', 'connects.connecting_id', 'users.id')
             ->join('users as connection', 'connection.id', 'connects.connected_id')
