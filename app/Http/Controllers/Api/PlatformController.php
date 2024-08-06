@@ -55,7 +55,6 @@ class PlatformController extends Controller
 
     public function add(AddPlatformRequest $request)
     {
-
         $platform = Platform::where('id', $request->platform_id)->where('status', 1)->first();
         if (!$platform) {
             return response()->json([
@@ -68,7 +67,7 @@ class PlatformController extends Controller
         if ($baseUrl) {
             if (substr($baseUrl, -1) == '/') {
                 $baseUrl = substr($baseUrl, 0, -1);
-            };
+            }
         }
 
         $user_platform = DB::table('user_platforms')
@@ -77,8 +76,8 @@ class PlatformController extends Controller
             ->first();
 
         try {
-
             if ($user_platform) {
+                // Update existing platform
                 $path = $request->path;
 
                 DB::table('user_platforms')
@@ -86,29 +85,30 @@ class PlatformController extends Controller
                     ->where('user_id', auth()->id())
                     ->update([
                         'label' => $request->label,
-                        'path' => $path
+                        'path' => $path,
+                        'direct' => $request->direct
                     ]);
 
                 $userPlatform = $this->userPlatform($request->platform_id);
                 if ($userPlatform) {
                     return response()->json([
                         'status' => 200,
-                        'message' => trans('backend.platform_updated_success'), 'data' => $userPlatform
+                        'message' => trans('backend.platform_updated_success'),
+                        'data' => $userPlatform
                     ]);
                 }
             } else {
-                // add platform
+                // Add new platform
                 $path = $request->path;
                 $latestPlatform = DB::table('user_platforms')
                     ->where('user_id', auth()->id())
                     ->latest()
                     ->first();
 
-
-                $userPlatform = DB::table('user_platforms')->insert([
+                DB::table('user_platforms')->insert([
                     'user_id' => auth()->id(),
                     'platform_id' => $request->platform_id,
-                    'direct' => 0,
+                    'direct' => $request->direct,
                     'label' => $request->label,
                     'path' => $path,
                     'platform_order' => $latestPlatform ? ($latestPlatform->platform_order + 1) : 1,
@@ -117,11 +117,11 @@ class PlatformController extends Controller
                 $userPlatform = $this->userPlatform($request->platform_id);
                 return response()->json([
                     "status" => 200,
-                    "message" => trans('backend.platform_added_success'), 'data' => $userPlatform
+                    "message" => trans('backend.platform_added_success'),
+                    'data' => $userPlatform
                 ]);
             }
         } catch (Exception $ex) {
-
             return response()->json([
                 "status" => 400,
                 "message" => $ex->getMessage()
@@ -251,15 +251,7 @@ class PlatformController extends Controller
         $userPlatform = DB::table('user_platforms')
             ->select(
                 'platforms.id',
-                'platforms.title',
-                'platforms.icon',
-                'platforms.input',
-                'platforms.baseUrl',
-                'platforms.placeholder_en',
-                'platforms.placeholder_sv',
-                'platforms.description_en',
-                'platforms.description_sv',
-                'user_platforms.created_at',
+                'user_platforms.user_id',
                 'user_platforms.path',
                 'user_platforms.label',
                 'user_platforms.direct',
