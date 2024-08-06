@@ -29,7 +29,7 @@ class RegisterRequest extends FormRequest
             'name' => ['nullable', 'min:3', 'max:20'],
             'username' => ['required', 'min:5', 'max:25', 'regex:/^[A-Za-z][A-Za-z0-9_.]{5,25}$/', 'unique:users'],
             'email' => ['required', 'email', 'max:50', 'unique:users'],
-            'phone' => ['sometimes', 'min:5', 'max:15', 'unique:users'],
+            'phone' => ['required', 'min:5', 'max:15'],
             'password' => ['required', 'min:6', 'confirmed'],
         ];
     }
@@ -57,7 +57,7 @@ class RegisterRequest extends FormRequest
             'email.unique' => trans('validation.email_unique'),
             'phone.min' => trans('validation.phone_min'),
             'phone.max' => trans('validation.phone_max'),
-            'phone.unique' => trans('validation.phone_unique'),
+            'phone.required' => trans('validation.phone_required'),
             'password.required' => trans('validation.password_required'),
             'password.min' => trans('validation.password_min'),
             'password.confirmed' => trans('validation.confiremd'),
