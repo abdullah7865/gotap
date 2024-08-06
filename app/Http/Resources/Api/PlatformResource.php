@@ -14,7 +14,7 @@ class PlatformResource extends JsonResource
      */
     public function toArray($request)
     {
-        $data =  [
+        $data = [
             'id' => $this->id ?? null,
             'title' => $this->title ?? null,
             'icon' => $this->icon ?? null,
@@ -28,6 +28,7 @@ class PlatformResource extends JsonResource
             'path' => $this->path ?? null,
             'label' => $this->label ?? null,
             'direct' => $this->direct ?? null,
+            'platform_order' => $this->platform_order ?? null,
         ];
 
         if (request()->segment(2) == 'profile') {

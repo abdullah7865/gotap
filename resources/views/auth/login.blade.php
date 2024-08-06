@@ -6,7 +6,7 @@
                     <div class="card-header d-flex justify-content-center">
                         <a href="/admin/dashboard" class="app-brand-link">
                             <span class="app-brand-logo demo">
-                                <img src="{{ asset('logo_2.png') }}" class="img-fluid" width="140">
+                                <img src="{{ asset('logo.png') }}" class="img-fluid" width="140">
                             </span>
                         </a>
                     </div>

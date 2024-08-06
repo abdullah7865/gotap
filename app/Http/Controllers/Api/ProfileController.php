@@ -17,23 +17,22 @@ class ProfileController extends Controller
     public function index()
     {
         $platforms = DB::table('user_platforms')
-            ->select(
-                'platforms.id',
-                'platforms.title',
-                'platforms.icon',
-                'platforms.input',
-                'platforms.baseUrl',
-                'user_platforms.created_at',
-                'user_platforms.path',
-                'user_platforms.label',
-                'user_platforms.platform_order',
-                'user_platforms.direct',
-            )
-            ->join('platforms', 'platforms.id', 'user_platforms.platform_id')
-            ->where('user_id', auth()->id())
-            ->orderBy(('user_platforms.platform_order'))
-            ->get();
-
+        ->select(
+            'platforms.id',
+            'platforms.title',
+            'platforms.icon',
+            'platforms.input',
+            'platforms.baseUrl',
+            'user_platforms.created_at',
+            'user_platforms.path',
+            'user_platforms.label',
+            'user_platforms.platform_order',
+            'user_platforms.direct',
+        )
+        ->join('platforms', 'platforms.id', '=', 'user_platforms.platform_id')
+        ->where('user_id', auth()->id())
+        ->orderBy('user_platforms.platform_order')
+        ->get();
 
         return response()->json(
             [

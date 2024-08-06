@@ -2,7 +2,7 @@
     <div class="app-brand demo mb-4">
         <a href="/admin/dashboard" class="app-brand-link">
             <span class="app-brand-logo demo" style="background:white">
-                <img src="{{ asset('logo_2.png') }}" class="img-fluid" width="140" alt="Logo here">
+                <img src="{{ asset('logo.png') }}" class="img-fluid" width="140" alt="Logo here">
             </span>
         </a>
 
@@ -76,7 +76,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn" style="background: #0EA7C1; color:white" onclick="savePassword()">Update</button>
+                <button type="button" class="btn" style="background: #0EA7C1; color:white"
+                    onclick="savePassword()">Update</button>
             </div>
         </div>
     </div>

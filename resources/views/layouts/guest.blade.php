@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Tocky') }}</title>
+    <title>{{ config('app.name', 'GoTap') }}</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('logo_2.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('logo.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

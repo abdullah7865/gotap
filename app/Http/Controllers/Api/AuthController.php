@@ -10,15 +10,16 @@ use Illuminate\Http\Response;
 use App\Mail\ForgotPasswordMail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\Api\UserResource;
 use App\Http\Requests\Api\Auth\LoginRequest;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\Api\Auth\RegisterRequest;
 use App\Http\Requests\Api\Auth\ResetPasswordRequest;
 use App\Http\Requests\Api\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Api\Auth\RecoverAccountRequest;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -255,4 +256,36 @@ class AuthController extends Controller
 
         return Response::json(['message' => 'OTP is verified successfully!'], 200);
     }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'User is not authenticated.']);
+        }
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json([
+                'status'  => 400,
+                'message' => 'The old password is incorrect.']);
+        }
+
+        if ($request->new_password !== $request->new_password_confirmation) {
+            return response()->json([
+                'status'  => 400,
+                'message' => 'The new password and confirmation password do not match.']);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Password changed successfully.']);
+    }
+
+
 }

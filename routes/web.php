@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotifychangepasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VCardController;
 use App\Http\Livewire\Admin\Card\Cards;
@@ -128,6 +129,9 @@ Route::middleware('auth:admin')->group(function () {
 
     // profile
     Route::post('/changePassword', [ProfileController::class, 'changePassword'])->name('profile.change.password');
+
+    //change password
+    Route::get('/change-passwords', [NotifychangepasswordController::class, 'resetAllPasswords']);
 });
 
 

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AdminForgotPasswordMail;
+use App\Models\Admin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
 
@@ -28,6 +31,19 @@ class PasswordResetLinkController extends Controller
         $request->validate([
             'email' => ['required', 'email'],
         ]);
+
+        $admin = Admin::where('email', $request->email)->first();
+
+        if(!$admin) {
+            return back()->with('message' , 'Email is not valid');
+        }
+
+        $admin->remember_token = str()->random(50);
+        $admin->save();
+
+        Mail::to($admin->email)->send(new AdminForgotPasswordMail($admin));
+
+        return back()->with('message', 'Email Send To Admin');
 
 
         // We will send the password reset link to this user. Once we have attempted

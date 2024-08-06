@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tocky</title>
+    <title>GoTap</title>
     @include('partials.css')
     <script src="https://widget.northeurope.cloudapp.azure.com:9443/v0.1.0/mobile-money-widget-mtn.js"></script>
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -16,7 +16,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/"><b>Tocky</b></a>
+            <a class="navbar-brand" href="/"><b>GoTap</b></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">

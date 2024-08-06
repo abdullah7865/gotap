@@ -10,7 +10,7 @@
         <!-- Search -->
         <div class="navbar-nav align-items-center">
             <div class="nav-item justify-content-middle display-6">
-                Welcome Tocky Admin
+                Welcome GoTap Admin
             </div>
         </div>
         <!-- /Search -->

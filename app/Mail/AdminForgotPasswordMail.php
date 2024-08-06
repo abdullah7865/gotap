@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Admin;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,18 +10,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeMail extends Mailable
+class AdminForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct(public Admin $admin)
     {
-        $this->user = $data;
+
     }
 
     /**
@@ -31,7 +32,7 @@ class WelcomeMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'GoTap Welcome Mail',
+            subject: 'Admin Forgot Password Mail',
         );
     }
 
@@ -43,7 +44,7 @@ class WelcomeMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.welcome-mail',
+            view: 'emails.admin-forgot-password',
         );
     }
 

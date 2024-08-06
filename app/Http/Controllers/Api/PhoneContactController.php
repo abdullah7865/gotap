@@ -44,7 +44,7 @@ class PhoneContactController extends Controller
     {
         $contact = DB::table('phone_contacts')
             ->where('user_id', auth()->id())
-            ->where('id', $request->contact_id)
+            ->where('id', $request->id)
             ->first();
 
         if (!$contact) {

@@ -42,6 +42,8 @@ Route::middleware('localization')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
 
         Route::middleware('user.status')->group(function () {
+
+            Route::post('/change-password', [AuthController::class, 'changePassword']);
             // Category
             Route::get('/categories', [CategoryController::class, 'index']);
 

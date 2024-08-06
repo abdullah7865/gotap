@@ -11,6 +11,11 @@
                             </span>
                         </a>
                     </div>
+
+                    @if (session()->has('message'))
+                        {{ session('message') }}
+                    @endif
+
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.password.store') }}">
                             @csrf

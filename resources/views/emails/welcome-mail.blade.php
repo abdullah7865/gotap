@@ -92,7 +92,7 @@
                   padding: 0px 0px 16px 0px;
                 "
                             colspan="3">
-                            Tocky
+                            GoTap
                         </td>
                     </tr>
 
@@ -135,7 +135,7 @@
                           text-align: left;
                         "
                                             colspan="3">
-                                            Congratulations and welcome to Tocky! We're
+                                            Congratulations and welcome to GoTap! We're
                                             thrilled to have you on board.
                                         </td>
                                     </tr>
@@ -156,10 +156,10 @@
                           text-align: left;
                         "
                                             colspan="3">
-                                            Thank you for choosing Tocky. We're excited about the opportunity to
-                                            assist you in Tocky. If you have any questions or
+                                            Thank you for choosing GoTap. We're excited about the opportunity to
+                                            assist you in GoTap. If you have any questions or
                                             need assistance, feel free to reach out to our support team at <a
-                                                href="mailto:support@tocky.co">support@tocky.co</a>.
+                                                href="mailto:support@Gotap.co">support@GoTap.co</a>.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -184,7 +184,7 @@
                   margin: 0;
                 "
                             colspan="3">
-                            Tocky
+                            GoTap
                         </td>
                     </tr>
 
@@ -205,7 +205,7 @@
                             <span>
                                 &copy;
                                 <span id="copyright"> </span>
-                                <a href="#" target="_blank">Tocky</a>
+                                <a href="#" target="_blank">GoTap</a>
                                 All Rights Reserved.
                             </span>
                         </td>

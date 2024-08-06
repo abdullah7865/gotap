@@ -7,9 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('logo_2.png') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}" />
 
-    <title>{{ config('app.name', 'Tocky') }}</title>
+    <title>{{ config('app.name', 'GoTap') }}</title>
 
     <meta name="description" content="" />
 
@@ -27,9 +27,9 @@
     <!-- Hero Section -->
 
     <section>
-        
-        <input type="hidden" id="direct_url" value="{{$directPath}}">
-        
+
+        <input type="hidden" id="direct_url" value="{{ $directPath }}">
+
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-md-5 col-12 shadow-lg">
@@ -72,25 +72,25 @@
 
                                 <div class="about_section mt-3">
                                     <h1>Perfil</h1>
-                                    @if($user->bio)
-                                    <div class="content-container">
-                                        <p class="m-0" style="{{ $is_private ? 'filter:blur(3px)' : '' }}">
-                                            {{ $user->bio }}
-                                        </p>
-                                    </div>
+                                    @if ($user->bio)
+                                        <div class="content-container">
+                                            <p class="m-0" style="{{ $is_private ? 'filter:blur(3px)' : '' }}">
+                                                {{ $user->bio }}
+                                            </p>
+                                        </div>
                                     @endif
                                 </div>
-                                
+
                                 <div class="about_section mt-3">
-                                    @if($user->job_title)
-                                    <div class="d-flex gap-2">
-                                        <h1>Profesión: </h1>{{ $user->job_title }}
-                                    </div>
+                                    @if ($user->job_title)
+                                        <div class="d-flex gap-2">
+                                            <h1>Profesión: </h1>{{ $user->job_title }}
+                                        </div>
                                     @endif
-                                    @if($user->job_title)
-                                    <div class="d-flex gap-2">
-                                        <h1>Empresa: </h1> {{ $user->company }}
-                                    </div>
+                                    @if ($user->job_title)
+                                        <div class="d-flex gap-2">
+                                            <h1>Empresa: </h1> {{ $user->company }}
+                                        </div>
                                     @endif
                                 </div>
 
@@ -132,7 +132,7 @@
                                                                     <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon, 'platform')) }}"
                                                                         class="img-fluid" />
                                                                 </a>
-                                                                <!--{{$userPlatforms[$i][$j]->direct}} ---- {{$userPlatforms[$i][$j]->platform_id}} -->
+                                                                <!--{{ $userPlatforms[$i][$j]->direct }} ---- {{ $userPlatforms[$i][$j]->platform_id }} -->
                                                             @endif
                                                         @endif
                                                     </div>
@@ -170,7 +170,8 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <!--@if ($user->address)-->
+                                    <!--@if ($user->address)
+-->
                                     <!--    <div class="row my-3">-->
                                     <!--        <div class="col-2">-->
                                     <!--            <i class="bx bx-map fs-4"></i>-->
@@ -191,7 +192,8 @@
                                     <!--            </a>-->
                                     <!--        </div>-->
                                     <!--    </div>-->
-                                    <!--@endif-->
+                                    <!--
+@endif-->
                                 </div>
 
                                 <!------------------------------------------ Contact Section Ended ----------------------------->
@@ -215,7 +217,7 @@
 
     <script>
         $(document).ready(function() {
-            if($('#direct_url').val()) {
+            if ($('#direct_url').val()) {
                 location.href = $('#direct_url').val()
             }
         });
