@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\ConnectRequest;
-use App\Models\Category;
-use App\Models\Link;
 use App\Models\User;
-use App\Services\CategoryService;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ConnectController extends Controller
 {
     public function connect(ConnectRequest $request)
     {
+
+        if($request->connect_id == auth()->id()) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Please enter valid connect Id'
+            ]);
+        }
+
         // check connection is valid
         $connection = User::where('id', $request->connect_id)
             ->first();
@@ -56,12 +60,21 @@ class ConnectController extends Controller
     public function disconnect(ConnectRequest $request)
     {
 
+        if($request->connect_id == auth()->id()) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Please enter valid connect Id'
+            ]);
+        }
+
+
         // check connection is valid
         $connection = User::where('id', $request->connect_id)
             ->first();
 
         if (!$connection) {
-            return response()->json(['message' => trans('backend.connection_not_found')]);
+            return response()->json([
+                'message' => trans('backend.connection_not_found')]);
         }
 
         $connected = DB::table('connects')
@@ -88,6 +101,7 @@ class ConnectController extends Controller
      */
     public function getConnections()
     {
+
         $connections = User::select(
             'connection.id as connection_id',
             'connection.name as connection_name',
@@ -101,7 +115,7 @@ class ConnectController extends Controller
             ->where('users.id', auth()->id())
             ->get();
 
-        return response()->json(['connections' => $connections]);
+        return response()->json(['status' => 200, 'data' => $connections]);
     }
 
     /**
@@ -109,13 +123,20 @@ class ConnectController extends Controller
      */
     public function getConnectionProfile(ConnectRequest $request)
     {
+
+        if($request->connect_id == auth()->id()) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Please enter valid connect Id'
+            ]);
+        }
         $res['user'] = User::where('id', $request->connect_id)->first();
         if (!$res['user']) {
             return  response()->json(['message' => trans('backend.profile_not_found')]);
         }
 
 
-        $links = Link::where('user_id', $request->connect_id)->get();
+        // $links = Link::where('user_id', $request->connect_id)->get();
         $platforms = DB::table('user_platforms')
             ->select(
                 'platforms.id',
@@ -140,9 +161,7 @@ class ConnectController extends Controller
             ->first();
 
         return response()->json([
-            'message' => trans('backend.user_profile'),
-            'user' => $res['user'],
-            'links' => $links,
+            'profile' => $res['user'],
             'platforms' => $platforms,
             'is_connected' => $isConnected ? 1 : 0,
         ]);

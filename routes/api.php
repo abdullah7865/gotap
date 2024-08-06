@@ -121,9 +121,9 @@ Route::middleware('localization')->group(function () {
 
             // Connects
             Route::post('/connect', [ConnectController::class, 'connect']); //done
-            // Route::post('/disconnect', [ConnectController::class, 'disconnect']);
-            // Route::post('/connectionProfile', [ConnectController::class, 'getConnectionProfile']);
-            // Route::get('/connections', [ConnectController::class, 'getConnections']);
+            Route::post('/disconnect', [ConnectController::class, 'disconnect']);
+            Route::post('/connectionProfile', [ConnectController::class, 'getConnectionProfile']);
+            Route::get('/connections', [ConnectController::class, 'getConnections']);
         });
         Route::get('logout', [AuthController::class, 'logout']);
     });
