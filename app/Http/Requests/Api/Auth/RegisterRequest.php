@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'min:3', 'max:20'],
+            'name' => ['nullable', 'min:3', 'max:20'],
             'username' => ['required', 'min:5', 'max:25', 'regex:/^[A-Za-z][A-Za-z0-9_.]{5,25}$/', 'unique:users'],
             'email' => ['required', 'email', 'max:50', 'unique:users'],
             'phone' => ['sometimes', 'min:5', 'max:15', 'unique:users'],
@@ -40,14 +40,14 @@ class RegisterRequest extends FormRequest
     //       'username.regex' => 'The username must start with a letter and can only contain letters (uppercase or lowercase), numbers, underscores, or periods. It should be between 5 and 25 characters long.',
     //     ];
     // }
-    
+
     public function messages()
     {
         return [
-            'name.required' => trans('validation.name_required'),
+            // 'name.required' => trans('validation.name_required'),
             'name.min' => trans('validation.name_min'),
             'name.max' => trans('validation.name_max'),
-            
+
             'username.required' => trans('validation.username_required'),
             'username.min' => trans('validation.username_min'),
             'username.max' => trans('validation.username_max'),
@@ -64,7 +64,7 @@ class RegisterRequest extends FormRequest
             'password.confirmed' => trans('validation.confiremd'),
         ];
     }
-    
+
     // protected function failedValidation(Validator $validator)
     // {
     //     throw new HttpResponseException(response()->json([
