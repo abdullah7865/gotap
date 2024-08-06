@@ -48,10 +48,15 @@ class PhoneContactController extends Controller
             ->first();
 
         if (!$contact) {
-            return response()->json(['message' => trans('backend.phone_contact_not_found')]);
+            return response()->json([
+                'status' => 400,
+                'message' => trans('backend.phone_contact_not_found')]);
         }
 
-        return response()->json(['contactDetails' => new ContactResource($contact)]);
+        return response()->json([
+            'status'  => 200,
+            'message' => 'Phone Contacts',
+            'data' => new ContactResource($contact)]);
     }
 
     /**
