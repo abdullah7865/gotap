@@ -28,6 +28,12 @@
                 <div>Users</div>
             </a>
         </li>
+        <li class="menu-item {{ request()->is('admin/users') ? 'active' : '' }}">
+            <a href="{{ url('admin/users') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-pin"></i>
+                <div>Manage Teams</div>
+            </a>
+        </li>
         <li class="menu-item {{ request()->is('admin/categories') ? 'active' : '' }}">
             <a href="{{ url('admin/categories') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-category"></i>
