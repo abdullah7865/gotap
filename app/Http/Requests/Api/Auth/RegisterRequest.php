@@ -44,7 +44,6 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            // 'name.required' => trans('validation.name_required'),
             'name.min' => trans('validation.name_min'),
             'name.max' => trans('validation.name_max'),
 
