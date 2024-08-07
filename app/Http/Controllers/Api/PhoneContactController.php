@@ -71,7 +71,7 @@ class PhoneContactController extends Controller
             $image = $request->photo;
             $imageName = time() . '.' . $image->extension();
             $image->storeAs('public/uploads/photos', $imageName);
-            $photo = 'uploads/photos/' . $imageName;
+            $photo = '/storage/uploads/photos/' . $imageName;
         }
 
         DB::table('phone_contacts')->insert([
@@ -124,7 +124,7 @@ class PhoneContactController extends Controller
                 $image = $request->photo;
                 $imageName = time() . '.' . $image->extension();
                 $image->storeAs('public/uploads/photos', $imageName);
-                $photo = 'uploads/photos/' . $imageName;
+                $photo = '/storage/uploads/photos/' . $imageName;
                 if ($oldPhoto) {
                     if (Storage::exists('public/' . $oldPhoto)) {
                         Storage::delete('public/' . $oldPhoto);

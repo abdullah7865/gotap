@@ -54,7 +54,7 @@ class ProfileController extends Controller
                 $image = $request->cover_photo;
                 $imageName = time() . '.' . $image->extension();
                 $image->storeAs('public/uploads/coverPhotos', $imageName);
-                $cover_photo = 'uploads/coverPhotos/' . $imageName;
+                $cover_photo = '/storage/uploads/coverPhotos/' . $imageName;
                 if (auth()->user()->cover_photo) {
                     if (Storage::exists('public/' . auth()->user()->cover_photo)) {
                         Storage::delete('public/' . auth()->user()->cover_photo);
@@ -65,7 +65,7 @@ class ProfileController extends Controller
                 $image = $request->photo;
                 $imageName = time() . '.' . $image->extension();
                 $image->storeAs('public/uploads/photos', $imageName);
-                $photo = 'uploads/photos/' . $imageName;
+                $photo = '/storage/uploads/photos/' . $imageName;
                 if (auth()->user()->photo) {
                     if (Storage::exists('public/' . auth()->user()->photo)) {
                         Storage::delete('public/' . auth()->user()->photo);
