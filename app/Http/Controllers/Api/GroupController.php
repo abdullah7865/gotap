@@ -129,7 +129,9 @@ class GroupController extends Controller
     {
         $group = Group::where('id', $request->group_id)->where('user_id', auth()->id())->first();
         if (!$group) {
-            return response()->json(['message' => trans('backend.group_not_found')]);
+            return response()->json([
+                'status' => 400,
+                'message' => trans('backend.group_not_found')]);
         }
 
         // remove all data related to group
@@ -137,9 +139,13 @@ class GroupController extends Controller
             DB::table('group_contacts')->where('group_id', $request->group_id)->delete();
             DB::table('user_groups')->where('group_id', $request->group_id)->delete();
             Group::where('user_id', auth()->id())->where('id', $request->group_id)->delete();
-            return response()->json(['message' => trans('backend.group_removed')]);
+            return response()->json([
+                'status' => 200,
+                'message' => trans('backend.group_removed')]);
         } catch (Exception $ex) {
-            return response()->json(['message' => $ex->getMessage()]);
+            return response()->json([
+                'status' => 400,
+                'message' => $ex->getMessage()]);
         }
     }
 
