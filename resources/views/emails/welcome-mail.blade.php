@@ -68,7 +68,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="90%" style="max-width: 600px">
                     <tr>
                         <td align="center" valign="top" style="padding: 50px 0px 12px 0px" colspan="3">
-                            <img src="https://budgetcollab.com/icons/ms-icon-144x144.png" height="77" border="0"
+                            <img src="https://app.gocoompany.com/logo.png" height="77" border="0"
                                 alt="Budget Collab"
                                 style="
                     font-family: Arial, Helvetica, sans-serif;
