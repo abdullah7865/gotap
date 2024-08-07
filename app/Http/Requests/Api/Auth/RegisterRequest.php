@@ -26,8 +26,8 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['nullable', 'min:3', 'max:20'],
-            'username' => ['required', 'min:5', 'max:25', 'regex:/^[A-Za-z][A-Za-z0-9_.]{5,25}$/', 'unique:users'],
+            'name' => ['required', 'min:3', 'max:20'],
+            'username' => ['nullable', 'min:5', 'max:25', 'regex:/^[A-Za-z][A-Za-z0-9_.]{5,25}$/', 'unique:users'],
             'email' => ['required', 'email', 'max:50', 'unique:users'],
             'phone' => ['required', 'min:5', 'max:15'],
             'password' => ['required', 'min:6', 'confirmed'],
@@ -44,10 +44,10 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.required' => trans('validation.name_required'),
             'name.min' => trans('validation.name_min'),
             'name.max' => trans('validation.name_max'),
 
-            'username.required' => trans('validation.username_required'),
             'username.min' => trans('validation.username_min'),
             'username.max' => trans('validation.username_max'),
             'username.regex' => trans('validation.username_regex'),
