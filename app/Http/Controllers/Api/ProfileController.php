@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use Exception;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Api\ProfileResource;
+use App\Http\Resources\Api\PlatformResource;
 use App\Http\Livewire\Admin\Category\Categoies;
 use App\Http\Requests\Api\Profile\UpdateProfileRequest;
-use App\Http\Resources\Api\PlatformResource;
-use App\Http\Resources\Api\ProfileResource;
-use App\Models\User;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -153,5 +154,28 @@ class ProfileController extends Controller
             );
 
         return response()->json(['message' => trans('backend.profile_set_to') . $status, 'data' => auth()->user()]);
+    }
+
+    public function search(SearchRequest $request)
+    {
+        $searchQuery = $request->input('query', '');
+
+        if (empty($searchQuery)) {
+            $users = User::all();
+            $message = 'All users fetched successfully.';
+        } else {
+            $users = User::where('name', 'like', '%' . $searchQuery . '%')->get();
+            if ($users->isEmpty()) {
+                $message = 'No users found.';
+            } else {
+                $message = 'Users have been found.';
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => $message,
+            'data' => $users
+        ]);
     }
 }

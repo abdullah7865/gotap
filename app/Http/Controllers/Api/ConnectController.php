@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\ConnectRequest;
+use App\Http\Requests\SearchRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -99,8 +100,9 @@ class ConnectController extends Controller
     /**
      * Get all connections
      */
-    public function getConnections()
+ public function getConnections(SearchRequest $request)
     {
+        $searchQuery = $request->input('query', '');
 
         $connections = User::select(
             'connection.id as connection_id',
@@ -114,9 +116,18 @@ class ConnectController extends Controller
             ->join('connects', 'connects.connecting_id', 'users.id')
             ->join('users as connection', 'connection.id', 'connects.connected_id')
             ->where('users.id', auth()->id())
+            ->when(!empty($searchQuery), function($query) use ($searchQuery) {
+                $query->where('connection.name', 'like', '%' . $searchQuery . '%');
+            })
             ->get();
 
-        return response()->json(['status' => 200, 'data' => $connections]);
+        $message = $connections->isEmpty() ? 'No connections found .' : 'Connections fetched successfully.';
+
+        return response()->json([
+            'status' => 200,
+            'message' => $message,
+            'data' => $connections
+        ]);
     }
 
     /**

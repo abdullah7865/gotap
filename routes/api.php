@@ -59,6 +59,8 @@ Route::middleware('localization')->group(function () {
             Route::get('/profile', [UserProfileController::class, 'index']);
             Route::post('/updateProfile', [UserProfileController::class, 'update']);
             Route::get('/userDirect', [UserProfileController::class, 'userDirect']);
+            Route::get('/search', [UserProfileController::class, 'search']);
+
 
 
             //old gotap user
