@@ -89,6 +89,7 @@ class ProfileController extends Controller
                 'job_title' => $request->job_title,
                 'company' => $request->company,
                 'phone' => $request->phone,
+                'work_position'=> $request->work_position,
             ]);
 
             if (!$isUpdated) {
