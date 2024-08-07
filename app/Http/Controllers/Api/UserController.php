@@ -22,12 +22,10 @@ class UserController extends Controller
                 ->delete();
             if ($deleted) {
                 return response()->json([
-                    'status'  => 200,
                     'message' => trans('backend.connection_removed')
                 ]);
             } else {
                 return response()->json([
-                    'status' => 400,
                     'message' => trans('backend.connection_removed_fails')
                 ]);
             }
@@ -38,12 +36,10 @@ class UserController extends Controller
         ]);
         if ($connect) {
             return response()->json([
-                'status'  => 200,
                 'message' => trans('backend.connection_success')
             ]);
         }
         return response()->json([
-            'status' => 400,
             'message' => trans('backend.connection_removed_fails')
         ]);
     }
@@ -66,7 +62,6 @@ class UserController extends Controller
 
             $user = User::find(auth()->id());
             return response()->json([
-                'status' => 200,
                 'message' => trans('backend.profile_set_public'), 'data' => new ProfileResource($user)
             ]);
         }
@@ -79,7 +74,6 @@ class UserController extends Controller
             );
         $user = User::find(auth()->id());
         return response()->json([
-            'status' => 200,
             'message' => trans('backend.profile_set_private'), 'data' => new ProfileResource($user)
         ]);
     }
@@ -107,12 +101,10 @@ class UserController extends Controller
         if ($updated) {
             $message = trans('backend.account_will_delete');
             return response()->json([
-                'status' => 200,
                 'message' => $message
             ]);
         }
         return response()->json([
-            'status'  => 400,
             'message' => trans('backend.something_wrong')
         ]);
     }

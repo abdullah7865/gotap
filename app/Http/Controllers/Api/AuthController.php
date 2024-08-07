@@ -53,7 +53,7 @@ class AuthController extends Controller
         $token = $user->createToken(getDeviceId()  ?: $user->email)->plainTextToken;
         return response()->json(
             [
-                'status' => 200,
+
                 'message' => trans('backend.account_registered_success'),
                 'data' => new UserResource($user),
                 'token' => $token
@@ -72,7 +72,6 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(
                 [
-                    'status' => 400,
                     'message' => trans('backend.email_not_registered'),
                 ]
             );
@@ -81,7 +80,6 @@ class AuthController extends Controller
         if (!$user->status) {
             return response()->json(
                 [
-                    'status' => 400,
                     'message' => trans('backend.account_delete_or_deactivate'),
                 ]
             );
@@ -89,7 +87,6 @@ class AuthController extends Controller
 
         if (!auth()->attempt($request->only('email', 'password'))) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.password_incorrect')
             ]);
         }
@@ -97,7 +94,7 @@ class AuthController extends Controller
         $token = $user->createToken(getDeviceId()  ?: $user->email)->plainTextToken;
         return response()->json(
             [
-                'status'  => 200,
+
                 'message' => trans('backend.logged_in_success'),
                 'data' => new UserResource($user),
                 'token' => $token
@@ -208,18 +205,17 @@ class AuthController extends Controller
             );
             if ($updated) {
                 return response()->json([
-                    'status' => 200,
+
                     'message' => trans('backend.account_recovered')
                 ]);
             }
         } else {
             return response()->json([
-                'status'  => 200,
+
                 'message' => trans('backend.account_already_activated')
             ]);
         }
         return response()->json([
-            'status'  => 400,
             'message' => trans('backend.something_wrong')
         ]);
     }
@@ -263,19 +259,16 @@ class AuthController extends Controller
 
         if (!$user) {
             return response()->json([
-                'status' => 400,
                 'message' => 'User is not authenticated.']);
         }
 
         if (!Hash::check($request->old_password, $user->password)) {
             return response()->json([
-                'status'  => 400,
                 'message' => 'The old password is incorrect.']);
         }
 
         if ($request->new_password !== $request->new_password_confirmation) {
             return response()->json([
-                'status'  => 400,
                 'message' => 'The new password and confirmation password do not match.']);
         }
 
@@ -283,7 +276,7 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json([
-            'status' => 200,
+
             'message' => 'Password changed successfully.']);
     }
 

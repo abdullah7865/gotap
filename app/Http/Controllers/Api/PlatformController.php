@@ -58,7 +58,7 @@ class PlatformController extends Controller
         $platform = Platform::where('id', $request->platform_id)->where('status', 1)->first();
         if (!$platform) {
             return response()->json([
-                'status' => 400,
+
                 'message' => trans('backend.platform_not_found')
             ]);
         }
@@ -92,7 +92,7 @@ class PlatformController extends Controller
                 $userPlatform = $this->userPlatform($request->platform_id);
                 if ($userPlatform) {
                     return response()->json([
-                        'status' => 200,
+
                         'message' => trans('backend.platform_updated_success'),
                         'data' => $userPlatform
                     ]);
@@ -116,14 +116,12 @@ class PlatformController extends Controller
 
                 $userPlatform = $this->userPlatform($request->platform_id);
                 return response()->json([
-                    "status" => 200,
                     "message" => trans('backend.platform_added_success'),
                     'data' => $userPlatform
                 ]);
             }
         } catch (Exception $ex) {
             return response()->json([
-                "status" => 400,
                 "message" => $ex->getMessage()
             ]);
         }
@@ -140,7 +138,7 @@ class PlatformController extends Controller
             ->first();
         if (!$platform) {
             return response()->json([
-                'status' => 400,
+
                 'message' => trans('backend.platform_not_found')
             ]);
         }
@@ -150,7 +148,7 @@ class PlatformController extends Controller
             ->where('platform_id', $request->platform_id)
             ->delete();
         return response()->json([
-            'status' => 200,
+
             'message' => trans('backend.platform_removed_success')
         ]);
     }
@@ -182,7 +180,7 @@ class PlatformController extends Controller
         }
 
         return response()->json([
-            'status' => 200,
+
             'message' => trans("Order swapped successfully")
         ]);
     }

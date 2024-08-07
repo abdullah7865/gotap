@@ -16,7 +16,6 @@ class ConnectController extends Controller
 
         if($request->connect_id == auth()->id()) {
             return response()->json([
-                'status' => 400,
                 'message' => 'Please enter valid connect Id'
             ]);
         }
@@ -27,7 +26,6 @@ class ConnectController extends Controller
 
         if (!$connection) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.connection_not_found')
             ]);
         }
@@ -39,7 +37,6 @@ class ConnectController extends Controller
             ->first();
         if ($connected) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.already_connected')
             ]);
         }
@@ -50,7 +47,6 @@ class ConnectController extends Controller
                 'connecting_id' => auth()->id()
             ]);
             return response()->json([
-                'status' => 200,
                 'message' => trans('backend.connected_success')
             ]);
         } catch (Exception $ex) {
@@ -63,7 +59,6 @@ class ConnectController extends Controller
 
         if($request->connect_id == auth()->id()) {
             return response()->json([
-                'status' => 400,
                 'message' => 'Please enter valid connect Id'
             ]);
         }
@@ -124,7 +119,6 @@ class ConnectController extends Controller
         $message = $connections->isEmpty() ? 'No connections found .' : 'Connections fetched successfully.';
 
         return response()->json([
-            'status' => 200,
             'message' => $message,
             'data' => $connections
         ]);
@@ -138,7 +132,6 @@ class ConnectController extends Controller
 
         if($request->connect_id == auth()->id()) {
             return response()->json([
-                'status' => 400,
                 'message' => 'Please enter valid connect Id'
             ]);
         }

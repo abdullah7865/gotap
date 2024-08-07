@@ -29,7 +29,6 @@ class PhoneContactController extends Controller
 
         return response()->json(
             [
-                "status" => 200,
                 "message" => "Phone Contacts",
                 'data' => ContactResource::collection($contacts)
             ],
@@ -50,12 +49,11 @@ class PhoneContactController extends Controller
 
         if (!$contact) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.phone_contact_not_found')]);
         }
 
         return response()->json([
-            'status'  => 200,
+
             'message' => 'Phone Contacts',
             'data' => new ContactResource($contact)]);
     }
@@ -95,7 +93,6 @@ class PhoneContactController extends Controller
 
         return response()->json(
             [
-                'status' => 200,
                 'message' => trans('backend.phone_conact_added_success'),
                 'data' => new ContactResource($data),
             ]
@@ -111,7 +108,6 @@ class PhoneContactController extends Controller
         if (!$contact) {
             return response()->json(
                 [
-                    'status' => 400,
                     'message' => trans('backend.phone_contact_not_found')
                 ]
             );
@@ -148,7 +144,6 @@ class PhoneContactController extends Controller
             $contact = DB::table('phone_contacts')->where('id', $request->contact_id)->first();
             return response()->json(
                 [
-                    'status' => 200,
                     'message' => trans('backend.phone_contact_updated_success'),
                     'data' => new ContactResource($contact)
                 ]
@@ -156,7 +151,6 @@ class PhoneContactController extends Controller
         } catch (Exception $ex) {
             return response()->json(
                 [
-                    'status' => 400,
                     'message' => $ex->getMessage()
                 ]
             );
@@ -175,7 +169,6 @@ class PhoneContactController extends Controller
         if (!$platform) {
             return response()->json(
                 [
-                    'status' => 400,
                     'message' => trans('backend.phone_contact_not_found')
                 ],
             );
@@ -183,7 +176,6 @@ class PhoneContactController extends Controller
 
         return response()->json(
             [
-                'status' => 200,
                 'message' => trans('backend.phone_contact_deleted_success')
             ],
 

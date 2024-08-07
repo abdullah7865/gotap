@@ -30,7 +30,6 @@ class CardController extends Controller
             ->get();
 
         return response()->json([
-            'status' => 200,
             'data' => $cards
         ]);
     }
@@ -48,7 +47,6 @@ class CardController extends Controller
 
         if (!$card) {
             return response()->json([
-                "status"  => 400,
                 "message" => trans('backend.card_not_found')
             ]);
         }
@@ -56,7 +54,6 @@ class CardController extends Controller
         // check card is already activated
         if ($card->status) {
             return response()->json([
-                "status" => 400,
                 "message" => trans('backend.card_already_active')
             ]);
         }
@@ -75,12 +72,10 @@ class CardController extends Controller
             ]);
 
             return response()->json([
-                "status" => 200,
                 "message" => trans('backend.card_active_success')
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                "status" => 400,
                 "message" => $ex->getMessage()
             ]);
         }
@@ -100,7 +95,6 @@ class CardController extends Controller
 
         if (!$card) {
             return response()->json([
-                "status" => 400,
                 "message" => trans('backend.card_not_found')
             ]);
         }
@@ -113,7 +107,6 @@ class CardController extends Controller
             ->first();
         if (!$checkCard) {
             return response()->json([
-                "status" => 400,
                 'message' => trans('backend.not_authenticated')
             ]);
         }
@@ -127,17 +120,14 @@ class CardController extends Controller
 
             if ($checkCard->status) {
                 return response()->json([
-                    'status' => 200,
                     'message' => trans('backend.card_deactive_success')
                 ]);
             }
             return response()->json([
-                'status' => 200,
                 'message' => trans('backend.card_active_success')
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'status' => 400,
                 'message' => $ex->getMessage()
             ]);
         }
@@ -173,11 +163,11 @@ class CardController extends Controller
         $card = Card::where('uuid', $request->card_uuid)->first();
 
         if (!$card) {
-            return response()->json(["status" => 422, 'message' => 'Card not found']);
+            return response()->json(['message' => 'Card not found']);
         }
 
         if (!$card->status) {
-            return response()->json(["status" => 200, "message" => "Card not activated"]);
+            return response()->json(["message" => "Card not activated"]);
         }
 
         $checkCard = UserCard::where('card_id', $card->id)
@@ -185,13 +175,13 @@ class CardController extends Controller
             ->first();
 
         if (!$checkCard) {
-            return response()->json(["status" => 200, "message" => "User profile not accessible"]);
+            return response()->json(["message" => "User profile not accessible"]);
         }
 
         $user = User::find($checkCard->user_id);
 
         if (!$user) {
-            return response()->json(["status" => 404, "message" => "Profile not found"]);
+            return response()->json(["message" => "Profile not found"]);
         }
 
         $user->connected = 0;
@@ -238,6 +228,6 @@ class CardController extends Controller
             $user->connected = 1;
         }
 
-        return response()->json(["status" => 200, "message" => "User Profile", 'data' => $res]);
+        return response()->json(["message" => "User Profile", 'data' => $res]);
     }
 }

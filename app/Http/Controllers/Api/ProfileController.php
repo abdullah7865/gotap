@@ -95,7 +95,7 @@ class ProfileController extends Controller
 
             if (!$isUpdated) {
                 return response()->json([
-                    'status' => 400,
+
                     'message' => trans('backend.profile_updated_failed')
                 ]);
             }
@@ -103,12 +103,11 @@ class ProfileController extends Controller
             $user = User::where('id', auth()->id())->get()->first();
 
             return response()->json([
-                'status' => 200,
                 'message' => trans('backend.profile_updated_success'), 'data' => $user
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'status' => 400,
+
                 'message' => $ex->getMessage()
             ]);
         }
@@ -173,7 +172,6 @@ class ProfileController extends Controller
         }
 
         return response()->json([
-            'status' => 200,
             'message' => $message,
             'data' => $users
         ]);

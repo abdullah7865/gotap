@@ -27,7 +27,7 @@ class GroupController extends Controller
 
         return response()->json(
             [
-                'status' => 200,
+
                 'message' => "All Groups",
                 'data' => GroupResource::collection($groups)
             ]
@@ -83,7 +83,7 @@ class GroupController extends Controller
             ->first();
         if ($isExist) {
             return response()->json([
-                'status'  => 400,
+
                 'message' => trans('backend.group_already_exist')
             ]);
         }
@@ -95,7 +95,7 @@ class GroupController extends Controller
             'active' => $request->active ?? 0,
         ]);
         return response()->json([
-            'status' => 200,
+
             'message' => trans('backend.group_created_success')
         ]);
     }
@@ -106,7 +106,6 @@ class GroupController extends Controller
 
         if (!$group) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.group_not_found')
             ]);
         }
@@ -119,7 +118,6 @@ class GroupController extends Controller
 
         $group = Group::where('id', $request->group_id)->where('user_id', auth()->id())->first();
         return response()->json([
-            'status'  => 200,
             'message' => trans('backend.group_updated_success'),
             'data' => new GroupResource($group)
         ]);
@@ -130,7 +128,6 @@ class GroupController extends Controller
         $group = Group::where('id', $request->group_id)->where('user_id', auth()->id())->first();
         if (!$group) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.group_not_found')]);
         }
 
@@ -140,11 +137,10 @@ class GroupController extends Controller
             DB::table('user_groups')->where('group_id', $request->group_id)->delete();
             Group::where('user_id', auth()->id())->where('id', $request->group_id)->delete();
             return response()->json([
-                'status' => 200,
+
                 'message' => trans('backend.group_removed')]);
         } catch (Exception $ex) {
             return response()->json([
-                'status' => 400,
                 'message' => $ex->getMessage()]);
         }
     }
@@ -158,7 +154,6 @@ class GroupController extends Controller
         // check is user itself
         if (auth()->id() == $request->user_id) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.own_group_error')
             ]);
         }
@@ -167,7 +162,6 @@ class GroupController extends Controller
         // is user exist
         if (!$user) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.user_not_found')
             ]);
         }
@@ -175,7 +169,6 @@ class GroupController extends Controller
         // is user account activated
         if (!$user->status) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.user_not_activated')
             ]);
         }
@@ -184,7 +177,6 @@ class GroupController extends Controller
         $group = Group::where('user_id', auth()->id())->where('id', $request->group_id)->first();
         if (!$group) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.group_not_found')
             ]);
         }
@@ -197,7 +189,6 @@ class GroupController extends Controller
 
         if ($checkUserInGroup) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.user_already_exist')
             ]);
         }
@@ -212,14 +203,12 @@ class GroupController extends Controller
 
             Group::where('user_id', auth()->id())->where('id', $request->group_id)->increment('total_members');
             return response()->json([
-                'status'  => 200,
                 'message' => trans(
                     'backend.user_added_success'
                 ),
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'status' => 400,
                 'message' => $ex->getMessage()
             ]);
         }
@@ -234,7 +223,6 @@ class GroupController extends Controller
         $group = Group::where('user_id', auth()->id())->where('id', $request->group_id)->first();
         if (!$group) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.group_not_found')
             ]);
         }
@@ -246,7 +234,6 @@ class GroupController extends Controller
             ->first();
         if (!$userInGroup) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.cannot_delete_user')
             ]);
         }
@@ -260,12 +247,11 @@ class GroupController extends Controller
 
             Group::where('user_id', auth()->id())->where('id', $request->group_id)->decrement('total_members');
             return response()->json([
-                'status' => 200,
+
                 'message' => trans('backend.user_removed_from_group')
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'status' => 400,
                 'message' => $ex->getMessage()
             ]);
         }
@@ -280,7 +266,7 @@ class GroupController extends Controller
         // is contact exist
         if (!$contact) {
             return response()->json([
-                'status'  => 400,
+
                 'message' => trans('backend.contact_not_found')
             ]);
         }
@@ -289,7 +275,7 @@ class GroupController extends Controller
         $group = Group::where('user_id', auth()->id())->where('id', $request->group_id)->first();
         if (!$group) {
             return response()->json([
-                'status'  => 400,
+
                 'message' => trans('backend.group_not_found')
             ]);
         }
@@ -302,7 +288,6 @@ class GroupController extends Controller
 
         if ($checkContactInGroup) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.contact_already_exist')
             ]);
         }
@@ -316,13 +301,12 @@ class GroupController extends Controller
 
             Group::where('user_id', auth()->id())->where('id', $request->group_id)->increment('total_contacts');
             return response()->json([
-                'status' => 200,
+
                 'message' => trans('backend.contact_added_success'),
                 'data' => new ContactResource($contact)
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'status' => 400,
                 'message' => $ex->getMessage()
             ]);
         }
@@ -337,7 +321,6 @@ class GroupController extends Controller
         $group = Group::where('user_id', auth()->id())->where('id', $request->group_id)->first();
         if (!$group) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.group_not_found')
             ]);
         }
@@ -349,7 +332,6 @@ class GroupController extends Controller
             ->first();
         if (!$contactInGroup) {
             return response()->json([
-                'status' => 400,
                 'message' => trans('backend.cannot_delete_contact')
             ]);
         }
@@ -363,12 +345,11 @@ class GroupController extends Controller
 
             Group::where('user_id', auth()->id())->where('id', $request->group_id)->decrement('total_contacts');
             return response()->json([
-                'status' => 200,
+
                 'message' => trans('backend.contact_removed_success')
             ]);
         } catch (Exception $ex) {
             return response()->json([
-                'status' => 400,
                 'message' => $ex->getMessage()
             ]);
         }
@@ -394,7 +375,7 @@ class GroupController extends Controller
                 ->get();
 
             return response()->json([
-                'status' => 200,
+
                 'message' => 'Group Detail with user and contact details',
                 'users' => $users,
                 'contacts' => $contacts
@@ -402,7 +383,6 @@ class GroupController extends Controller
         }
 
         return response()->json([
-            'status' => 404,
             'message' => 'Requested Group does not exist',
             'data' => []
         ], 404);
