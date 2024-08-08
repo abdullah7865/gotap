@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\ConnectRequest;
+use App\Http\Requests\Api\User\GetConnect;
 use App\Http\Requests\SearchRequest;
 use App\Models\User;
 use Exception;
@@ -127,7 +128,7 @@ class ConnectController extends Controller
     /**
      * Get connection profile
      */
-    public function getConnectionProfile(ConnectRequest $request)
+    public function getConnectionProfile(GetConnect $request)
     {
         $user = User::where('username', $request->username)->first();
 
