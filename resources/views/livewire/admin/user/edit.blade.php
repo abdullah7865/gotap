@@ -20,14 +20,10 @@
                                             <img src="{{ $photo->temporaryUrl() }}" alt="user-avatar"
                                                 class="d-block rounded" height="200" width="170">
                                         @else
-                                            {{-- @if ($preview_photo)
-                                                <img src="{{ asset(isImageExist($preview_photo, 'profile')) }}" alt="user-avatar"
-                                                    class="d-block rounded" height="200" width="170">
-                                            @else
-                                                <img src="{{ asset('frame_2.webp') }}" alt="user-avatar"
-                                                    class="d-block rounded" height="200" width="170">
-                                            @endif --}}
-                                            <img src="{{ asset(isImageExist($preview_photo, 'profile')) }}" alt="user-avatar"
+                                            {{-- <img src="{{ asset(isImageExist($preview_photo, 'profile')) }}" alt="user-avatar"
+                                                class="d-block rounded" height="200" width="170"> --}}
+
+                                                <img src="{{ asset(Storage::url($preview_photo)) }}" alt="user-avatar"
                                                 class="d-block rounded" height="200" width="170">
                                         @endif
 
