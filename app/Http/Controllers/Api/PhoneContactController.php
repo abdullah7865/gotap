@@ -88,7 +88,7 @@ class PhoneContactController extends Controller
 
         $data = DB::table('phone_contacts')
             ->where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
             ->first();
 
         return response()->json(
