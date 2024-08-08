@@ -129,19 +129,20 @@ class ConnectController extends Controller
      */
     public function getConnectionProfile(ConnectRequest $request)
     {
+        $user = User::where('username', $request->username)->first();
 
-        if($request->connect_id == auth()->id()) {
+        if (!$user) {
+            return response()->json(['message' => 'Please enter a valid username']);
+        }
+
+        if ($user->username == auth()->user()->username) {
             return response()->json([
-                'message' => 'Please enter valid connect Id'
+                'message' => 'Please enter a valid username'
             ]);
         }
-        $res['user'] = User::where('id', $request->connect_id)->first();
-        if (!$res['user']) {
-            return  response()->json(['message' => trans('backend.profile_not_found')]);
-        }
 
+        $res['user'] = $user;
 
-        // $links = Link::where('user_id', $request->connect_id)->get();
         $platforms = DB::table('user_platforms')
             ->select(
                 'platforms.id',
@@ -156,13 +157,14 @@ class ConnectController extends Controller
                 'user_platforms.direct',
             )
             ->join('platforms', 'platforms.id', 'user_platforms.platform_id')
-            ->where('user_id', $request->connect_id)
-            ->orderBy(('user_platforms.platform_order'))
+            ->where('user_id', $user->id)
+            ->orderBy('user_platforms.platform_order')
             ->get();
 
+        // Check if the current user is connected to the target user
         $isConnected = DB::table('connects')
             ->where('connecting_id', auth()->id())
-            ->where('connected_id', $request->connect_id)
+            ->where('connected_id', $user->id)
             ->first();
 
         return response()->json([
@@ -171,4 +173,5 @@ class ConnectController extends Controller
             'is_connected' => $isConnected ? 1 : 0,
         ]);
     }
+
 }

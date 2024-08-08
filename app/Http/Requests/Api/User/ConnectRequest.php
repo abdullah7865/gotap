@@ -24,16 +24,16 @@ class ConnectRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {
-        return [
-            'connect_id' => ['required']
-        ];
-    }
+{
+    return [
+        'username' => ['required']
+    ];
+}
 
-    public function messages()
-    {
-        return [
-            'connect_id.required' => trans('validation.connect_id_required'),
-        ];
-    }
+public function messages()
+{
+    return [
+        'username.required' => trans('validation.username_required'),
+    ];
+}
 }
