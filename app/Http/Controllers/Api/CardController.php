@@ -157,77 +157,74 @@ class CardController extends Controller
     public function cardProfileDetail(Request $request)
     {
         $request->validate([
-            'card_uuid' => 'required',
+            'card_uuid' => 'required|string',
         ]);
 
-        $card = Card::where('uuid', $request->card_uuid)->first();
+        $card_uuid = $request->input('card_uuid');
+
+        $card = DB::table('cards')->where('uuid', $card_uuid)->first();
 
         if (!$card) {
-            return response()->json(['message' => 'Card not found']);
+            return response()->json(['error' => 'Card not found'], 404);
         }
 
-        if (!$card->status) {
-            return response()->json(["message" => "Card not activated"]);
+        $userCard = DB::table('user_cards')->where('card_id', $card->id)->first();
+
+        if (!$userCard) {
+            return response()->json(['error' => 'User not found for this card'], 404);
         }
-
-        $checkCard = UserCard::where('card_id', $card->id)
-            ->where('status', 1)
-            ->first();
-
-        if (!$checkCard) {
-            return response()->json(["message" => "User profile not accessible"]);
-        }
-
-        $user = User::find($checkCard->user_id);
+        $user = DB::table('users')->where('id', $userCard->user_id)->first();
 
         if (!$user) {
-            return response()->json(["message" => "Profile not found"]);
+            return response()->json(['error' => 'User not found'], 404);
         }
 
-        $user->connected = 0;
-        if ($user->id != auth()->id()) {
-            $connected = Connect::where('connecting_id', auth()->id())
-                ->where('connected_id', $user->id)
-                ->exists();
+        $platforms = DB::table('user_platforms')
+            ->join('platforms', 'user_platforms.platform_id', '=', 'platforms.id')
+            ->where('user_platforms.user_id', $user->id)
+            ->select('platforms.id', 'platforms.title', 'platforms.icon', 'platforms.input', 'platforms.baseUrl',
+                     'platforms.placeholder_en', 'platforms.placeholder_sv', 'platforms.description_en',
+                     'platforms.description_sv', 'user_platforms.path', 'user_platforms.label', 'user_platforms.direct',
+                     'user_platforms.platform_order')
+            ->get();
 
-            if ($connected) {
-                $user->connected = 1;
-            }
-        }
+    $isConnected = DB::table('connects')
+    ->where('connecting_id', auth()->id())
+    ->where('connected_id', $user->id)
+    ->exists() ? 1 : 0;
 
-        $categories = $this->custom->returnPlatforms($user->id, 'user');
-        $res['categories'] = $categories['categories'];
-        $user->direct = $categories['direct'];
-        $res['user'] = $user;
 
-        if ($request->query('source') == 'gotap') {
-            $user->increment('tiks');
+        $response = [
+            'profile' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'username' => $user->username,
+                'phone' => $user->phone,
+                'job_title' => $user->job_title,
+                'company' => $user->company,
+                'photo' => $user->photo,
+                'cover_photo' => $user->cover_photo,
+                'status' => $user->status,
+                'is_suspended' => $user->is_suspended,
+                'user_direct' => $user->user_direct,
+                'address' => $user->address,
+                'work_position' => $user->work_position,
+                'gender' => $user->gender,
+                'tiks' => $user->tiks,
+                'dob' => $user->dob,
+                'private' => $user->private,
+                'verified' => $user->verified,
+                'featured' => $user->featured,
+                'bio' => $user->bio,
+                'deactivated_at' => $user->deactivated_at,
+                'created_at' => $user->created_at
+            ],
+            'platforms' => $platforms,
+            'is_connected' => $isConnected
+        ];
 
-            $visited = ScanVisit::where('visiting_id', auth()->id())
-                ->where('visited_id', $user->id)
-                ->first();
-
-            if (!$visited) {
-                ScanVisit::create([
-                    'visiting_id' => auth()->id(),
-                    'visited_id' => $user->id,
-                ]);
-            }
-
-            $connected = Connect::where('connecting_id', auth()->id())
-                ->where('connected_id', $user->id)
-                ->first();
-
-            if (!$connected) {
-                Connect::create([
-                    'connecting_id' => auth()->id(),
-                    'connected_id' => $user->id,
-                ]);
-            }
-
-            $user->connected = 1;
-        }
-
-        return response()->json(["message" => "User Profile", 'data' => $res]);
+        return response()->json($response);
     }
+
 }
