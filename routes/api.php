@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ConnectController;
 use App\Http\Controllers\Api\ViewProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Card;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/platformClick', [PlatformController::class, 'incrementClick'])->name('inc.platform.click');
+Route::get('/getCards',function () {
+    return Card::select(
+        'id',
+        'uuid',
+        'status'
+    )
+    ->where('status', 0)
+    ->get()->toArray();
+});
 // Route::post('/incrementProfileView', [PlatformController::class, 'incrementProfileView'])->name('inc.profile.view');
 
 Route::middleware('localization')->group(function () {
