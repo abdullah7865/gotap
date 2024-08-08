@@ -128,7 +128,7 @@ class AuthController extends Controller
     private function sendOtp($email)
     {
         $email = trim($email);
-        $otp = rand(1111, 9999);
+        $otp = rand(100000, 999999);
 
         DB::table('password_resets')->where('email', $email)->delete();
 
