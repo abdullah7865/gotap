@@ -84,7 +84,7 @@ class ViewProfileController extends Controller
 
         return response()->json([
             'message' => 'User profile',
-            'user' => $res['user'],
+            'profile' => $res['user'],
             'platforms' => PlatformResource::collection($platforms),
             'is_connected' => $is_connected
         ]);
