@@ -26,27 +26,17 @@ class ViewProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required_without_all:card_uuid,connect_id',
-            'card_uuid' => 'required_without_all:username,connect_id',
-            'connect_id' => 'required_without_all:username,card_uuid'
+            'search_profile_by' => 'required',
         ];
     }
 
-    // public function messages()
-    // {
-    //     return [
-    //         'username.required_without_all' => 'Please enter username, card uuid or connect_id',
-    //         'card_uuid.required_without_all' => 'Please enter username, card uuid or connect_id',
-    //         'connect_id.required_without_all' => 'Please enter username, card uuid or connect_id',
-    //     ];
-    // }
-    
     public function messages()
     {
         return [
-            'username.required_without_all' => trans('validation.username_required_without'),
-            'card_uuid.required_without_all' => trans('validation.card_id_required_without'),
-            'connect_id.required_without_all' => trans('validation.connect_id_required_without'),
+            'search_profile_by.required'  => 'Please enter uuid or id or username',
+            // 'username.required_without_all' => trans('validation.username_required_without'),
+            // 'card_uuid.required_without_all' => trans('validation.card_id_required_without'),
+            // 'connect_id.required_without_all' => trans('validation.connect_id_required_without'),
         ];
     }
 

@@ -15,18 +15,25 @@ class ViewProfileController extends Controller
 
     public function viewUserProfile(ViewProfileRequest $request)
     {
-        $card = null;
-        $checkCard = null;
-        if ($request->has('card_uuid')) {
-            $card = Card::where('uuid', $request->card_uuid)->first();
-            if (!$card) {
-                return response()->json(['message' => trans('backend.card_not_found')]);
+
+        $res['user'] = null;
+
+        $card = Card::where('uuid', $request->search_profile_by)->first();
+        if (!$card) {
+            $res['user'] = User::where('username', $request->search_profile_by)->first();
+            if (!$res['user']) {
+                $res['user'] = User::where('id', $request->search_profile_by)->first();
             }
-            // check card status
+
+            if (!$res['user']) {
+                return response()->json(['message' => 'Profile not found']);
+            }
+        }
+        if ($card) {
             if (!$card->status) {
                 return response()->json(['message' => trans('backend.card_inactive')]);
             }
-            // check user card status is active or not
+
             $checkCard = DB::table('user_cards')
                 ->select('user_cards.user_id')
                 ->where('card_id', $card->id)
@@ -35,30 +42,18 @@ class ViewProfileController extends Controller
             if (!$checkCard) {
                 return response()->json(['message' => trans('backend.profile_not_accessible')]);
             }
-        }
 
-        if ($checkCard) {
             $res['user'] = User::where('id', $checkCard->user_id)->first();
         }
-        if ($request->has('username')) {
-            $res['user'] = User::where('username', $request->username)->first();
-        }
-        if ($request->has('connect_id')) {
-            $res['user'] = User::where('id', $request->connect_id)->first();
-        }
-        if (!$res['user']) {
-            return response()->json(['message' => trans('backend.profile_not_found')]);
-        }
+
 
         $is_connected = 0;
         $connected = DB::table('connects')->where('connecting_id', auth()->id())
-                ->where('connected_id', $res['user']->id)
-                ->first();
-            if ($connected) {
-                $is_connected = 1;
-            }
-
-        // $categoryService = new CategoryService();
+            ->where('connected_id', $res['user']->id)
+            ->first();
+        if ($connected) {
+            $is_connected = 1;
+        }
 
         if ($res['user']->id != auth()->id() || $res['user']->username != auth()->user()->username) {
             User::where('id', $res['user']->id)->increment('tiks');

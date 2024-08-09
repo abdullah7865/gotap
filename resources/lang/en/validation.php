@@ -93,9 +93,11 @@ return [
     'job_title_string' => 'Job title should be string.',
     'company_string' => 'Company name should be string.',
 
-    'username_required_without' => 'Please enter username, card uuid or connect_id.',
-    'card_id_required_without' => 'Please enter username, card uuid or connect_id.',
-    'connect_id_required_without' => 'Please enter username, card uuid or connect_id.',
+    // 'username_required_without' => 'Please enter username, card uuid or connect_id.',
+    // 'card_id_required_without' => 'Please enter username, card uuid or connect_id.',
+    // 'connect_id_required_without' => 'Please enter username, card uuid or connect_id.',
+
+    'search_profile_by_required' => 'Please enter uuid or id or username',
 
     'connect_id_required' => 'Connect Id field is required.'
 ];

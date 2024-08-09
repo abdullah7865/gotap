@@ -70,9 +70,11 @@ return [
     'job_title_string' => 'El título del trabajo debe ser una cadena.',
     'company_string' => 'El nombre de la empresa debe ser una cadena.',
 
-    'username_required_without' => 'Por favor, ingrese el nombre de usuario, UUID de tarjeta o connect_id.',
-    'card_id_required_without' => 'Por favor, ingrese el nombre de usuario, UUID de tarjeta o connect_id.',
-    'connect_id_required_without' => 'Por favor, ingrese el nombre de usuario, UUID de tarjeta o connect_id.',
+    // 'username_required_without' => 'Por favor, ingrese el nombre de usuario, UUID de tarjeta o connect_id.',
+    // 'card_id_required_without' => 'Por favor, ingrese el nombre de usuario, UUID de tarjeta o connect_id.',
+    // 'connect_id_required_without' => 'Por favor, ingrese el nombre de usuario, UUID de tarjeta o connect_id.',
+
+    'search_profile_by_required' => 'Por favor ingrese uuid o id o nombre de usuario',
 
     'connect_id_required' => 'Se requiere el ID de conexión.',
 ];
