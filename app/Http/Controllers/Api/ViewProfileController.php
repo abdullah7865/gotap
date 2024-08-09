@@ -50,12 +50,12 @@ class ViewProfileController extends Controller
             return response()->json(['message' => trans('backend.profile_not_found')]);
         }
 
-        $res['user']->connected = 0;
+        $is_connected = 0;
         $connected = DB::table('connects')->where('connecting_id', auth()->id())
                 ->where('connected_id', $res['user']->id)
                 ->first();
             if ($connected) {
-                $res['user']->connected = 1;
+                $is_connected = 1;
             }
 
         // $categoryService = new CategoryService();
@@ -85,8 +85,8 @@ class ViewProfileController extends Controller
         return response()->json([
             'message' => 'User profile',
             'user' => $res['user'],
-            'platforms' => PlatformResource::collection($platforms)
-            // 'categories' => $categoryService->categoryWithPlatorms($res['user']->id)
+            'platforms' => PlatformResource::collection($platforms),
+            'is_connected' => $is_connected
         ]);
     }
 }
