@@ -1,11 +1,11 @@
 {
     "applinks": {
-        "apps": [],
-        "details": [
-            {
-                "appID": "PCP45XF8RV.com.horizam.tocky",
-                "paths": ["/card_id"]
-            }
-        ]
+      "apps": [],
+      "details": [
+      {
+        "appID": "6G6B9728RW.com.horizam.gotap",
+        "paths": ["*"]
+      }
+      ]
     }
-}
+  }
