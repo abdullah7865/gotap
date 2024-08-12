@@ -14,13 +14,31 @@
     <meta name="description" content="" />
 
     <!-- Link Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('profile/style.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('profile/style.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ asset('profile/newstyle.css') }}" />
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
     <!------------------------------------------------ Boxicon CDN ------------------------------------------->
 
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <style>
+        .profile_img {
+            display: flex;
+            justify-content: center;
+            border-radius: 50%;
+            margin-top: -10%;
+
+        }
+
+        .profile_img img {
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            border: 7px solid #fff;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <body>
@@ -30,179 +48,123 @@
 
         <input type="hidden" id="direct_url" value="{{ $directPath }}">
 
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-5 col-12 shadow-lg">
-                    <div class="header_section shadow bg-white m-2 rounded-5">
-                        <div class="pb-3 pt-1">
-                            <div class="cover_image p-2">
-                                <img src="{{ asset(isImageExist($user->cover_photo)) }}" class="img-fluid rounded-5"
-                                    alt="" />
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-5 col-12" style="box-shadow: 0 0 15px 5px #ccc">
+                    <div class="row d-flex justify-content-center">
+                        <a target="_blank" href="https://www.gotaps.me" class="col-12 header-navbar TopBanner">
+                            <div class="TopBanner">
+                                Tap here to get your Gotap profile
                             </div>
-                            <div class="tikl_profile_image d-flex justify-content-center">
-                                <div class="tikl_profile">
-                                    <img src="{{ asset(isImageExist($user->photo, 'profile')) }}" class="img-fluid"
-                                        alt="" />
+                        </a>
+                        <div class="col-12 d-flex justify-content-center" style="padding: 0px;">
+                            <div class="col-12" style="padding: 0px;">
+                                <img style=" width: 100%;" src="{{ asset(isImageExist($user->cover_photo)) }}">
+                                <div class="profile_img">
+                                    <img src="{{ asset(isImageExist($user->photo, 'profile')) }}" alt="Profile Photo">
                                 </div>
-                            </div>
-                            <div class="tikl_profile_content text-center">
-                                <h3 class="mt-2">
-                                    {{ $user->name ? $user->name : $user->username }}
-                                </h3>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-12 d-flex justify-content-center" style="padding: 0px;">
+                            <div class="col-md-11" style="padding: 0px;">
+                                <h1 style=" margin-left:30px;" class="user-name">
+                                    {{ $user->name ? $user->name : $user->username }}
+                                </h1>
+                                <p style=" margin-left:30px; font-size:16px; color:#24171E;" class="user-name">
+                                    {{ $user->job_title }} at {{ $user->company }}
 
-                    <!-- Profile Image Section -->
-
-                    <div class="info_section">
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-11">
-                                <div class="row mx-auto mt-2 px-0">
-
-                                    <div class="text-center p-0">
-                                        <a href="{{ route('save.contact', $user->id) }}">
-                                            <button class="btn btn-primary w-100">Guardar Contacto</button>
-                                        </a>
-                                    </div>
-
-                                </div>
-
-                                <!-- About Section -->
-
-                                <div class="about_section mt-3">
-                                    <h1>Perfil</h1>
-                                    @if ($user->bio)
-                                        <div class="content-container">
-                                            <p class="m-0" style="{{ $is_private ? 'filter:blur(3px)' : '' }}">
-                                                {{ $user->bio }}
-                                            </p>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="about_section mt-3">
-                                    @if ($user->job_title)
-                                        <div class="d-flex gap-2">
-                                            <h1>Profesión: </h1>{{ $user->job_title }}
-                                        </div>
-                                    @endif
-                                    @if ($user->job_title)
-                                        <div class="d-flex gap-2">
-                                            <h1>Empresa: </h1> {{ $user->company }}
-                                        </div>
-                                    @endif
-                                </div>
+                                </p><br>
 
 
+                                <h1 style="font-size:20px; width:auto; margin-left:auto; margin-right:auto"
+                                    class="user-bio"> {{ $user->bio }}</h1><br>
+                                <!-- <h1 class="user-tiks"><?= $user->tiks ?></h1>--><br><br><br>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center" style="padding: 0px;">
+                            <div class=" col-md-6 col-8" style="padding: 0px;">
+                                <button id="connectBTN" class="btn btn-block AddBtn rounded-pill px-4 py-3 "
+                                    style="background-color: #000000;">
+                                    <a style="text-decoration: none;" target="_blank" class="text-white"
+                                        href="{{ route('save.contact', $user->id) }}"><b>Save to contact</b></a>
+                                </button>
+                            </div>
+                        </div>
 
-                                <!-- Social Icons -->
 
+                        <div class="container">
+                            <div class="row">
                                 @if (count($userPlatforms))
-                                    <h5 class="py-3 headings">Redes Sociales</h5>
-
+                                    @php $itemCount = 0; @endphp
                                     @for ($i = 0; $i < count($userPlatforms); $i++)
-                                        <div class="row {{ $i > 0 ? 'my-3' : '' }}">
-                                            <div class="social-media-links d-flex">
-                                                @for ($j = 0; $j < count($userPlatforms[$i]); $j++)
-                                                    <div class="col-3 col-lg-3 d-flex justify-content-center">
-                                                        @if ($userPlatforms[$i][$j]->check_user_privacy)
-                                                            <a href="javascript:void(0)" class="social"
-                                                                style="{{ $userPlatforms[$i][$j]->check_user_privacy ? 'filter:blur(5px)' : '' }}"
-                                                                target="{{ $userPlatforms[$i][$j]->check_user_privacy ? '' : '_blank' }}">
-                                                                <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon, 'platform')) }}"
-                                                                    class="img-fluid" />
-                                                            </a>
-                                                        @else
-                                                            @if ($userPlatforms[$i][$j]->base_url)
-                                                                <a href="{{ $userPlatforms[$i][$j]->base_url . $userPlatforms[$i][$j]->path }}"
-                                                                    class="social"
-                                                                    onclick="platformIncrement({{ $userPlatforms[$i][$j]->platform_id }}, {{ $userPlatforms[$i][$j]->user_id }})"
-                                                                    style="{{ $userPlatforms[$i][$j]->check_user_privacy ? 'filter:blur(5px)' : '' }}"
-                                                                    target="{{ $userPlatforms[$i][$j]->check_user_privacy ? '' : '_blank' }}">
-                                                                    <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon, 'platform')) }}"
-                                                                        class="img-fluid" />
-                                                                </a>
-                                                            @else
-                                                                <a href="{{ $userPlatforms[$i][$j]->path }}"
-                                                                    class="social"
-                                                                    onclick="platformIncrement({{ $userPlatforms[$i][$j]->platform_id }}, {{ $userPlatforms[$i][$j]->user_id }})"
-                                                                    style="{{ $userPlatforms[$i][$j]->check_user_privacy ? 'filter:blur(5px)' : '' }}"
-                                                                    target="{{ $userPlatforms[$i][$j]->check_user_privacy ? '' : '_blank' }}">
-                                                                    <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon, 'platform')) }}"
-                                                                        class="img-fluid" />
-                                                                </a>
-                                                                <!--{{ $userPlatforms[$i][$j]->direct }} ---- {{ $userPlatforms[$i][$j]->platform_id }} -->
-                                                            @endif
-                                                        @endif
-                                                    </div>
-                                                @endfor
+                                        @for ($j = 0; $j < count($userPlatforms[$i]); $j++)
+                                            @if ($itemCount % 3 === 0 && $itemCount > 0)
+                                                </div> <!-- Close the previous row -->
+                                                <div class="row my-3"> <!-- Start a new row -->
+                                            @endif
+
+                                            <div class="col-4 d-flex justify-content-center">
+                                                @if ($userPlatforms[$i][$j]->check_user_privacy)
+                                                    <a href="javascript:void(0)" class="social"
+                                                        style="{{ $userPlatforms[$i][$j]->check_user_privacy ? 'filter: blur(5px);' : '' }}"
+                                                        target="{{ $userPlatforms[$i][$j]->check_user_privacy ? '' : '_blank' }}">
+                                                        <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon, 'platform')) }}"
+                                                            class="gallery-image img-fluid"
+                                                            style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                                    </a>
+                                                @else
+                                                    @if ($userPlatforms[$i][$j]->base_url)
+                                                        <a href="{{ $userPlatforms[$i][$j]->base_url . $userPlatforms[$i][$j]->path }}"
+                                                            class="social"
+                                                            onclick="platformIncrement({{ $userPlatforms[$i][$j]->platform_id }}, {{ $userPlatforms[$i][$j]->user_id }})"
+                                                            style="{{ $userPlatforms[$i][$j]->check_user_privacy ? 'filter: blur(5px);' : '' }}"
+                                                            target="{{ $userPlatforms[$i][$j]->check_user_privacy ? '' : '_blank' }}">
+                                                            <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon, 'platform')) }}"
+                                                                class="gallery-image img-fluid"
+                                                                style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ $userPlatforms[$i][$j]->path }}"
+                                                            class="social"
+                                                            onclick="platformIncrement({{ $userPlatforms[$i][$j]->platform_id }}, {{ $userPlatforms[$i][$j]->user_id }})"
+                                                            style="{{ $userPlatforms[$i][$j]->check_user_privacy ? 'filter: blur(5px);' : '' }}"
+                                                            target="{{ $userPlatforms[$i][$j]->check_user_privacy ? '' : '_blank' }}">
+                                                            <img src="{{ asset(isImageExist($userPlatforms[$i][$j]->icon, 'platform')) }}"
+                                                                class="gallery-image img-fluid"
+                                                                style="max-width: 100px; max-height: 100px; object-fit: cover;" />
+                                                        </a>
+                                                    @endif
+                                                @endif
                                             </div>
-                                        </div>
+
+                                            @php $itemCount++; @endphp
+                                        @endfor
                                     @endfor
                                 @endif
+                            </div> <!-- Close the last row -->
+                        </div>
 
+                        <div class="col-12  d-flex justify-content-center">
 
-                                <!------------------------------------ Social Networks Section Ended --------------------------->
-
-                                <!----------------------------------------- Contact Section Started ---------------------------->
-
-                                <div class="social-info">
-                                    <h5 class="headings py-3">Datos de contacto</h5>
-                                    <div class="row my-3">
-                                        <div class="col-2">
-                                            <i class="bx bx-envelope fs-4"></i>
-                                        </div>
-                                        <div class="col-10">
-                                            <a href="{{ $is_private ? 'javascript:void(0)' : 'mailto:business@vittortech.com' }}"
-                                                target="{{ $is_private ? 'javascript:void(0)' : '_blank' }}"
-                                                style="{{ $is_private ? 'filter:blur(3px)' : '' }}"
-                                                class="d-flex justify-content-between contact-links text-decoration-none text-dark">
-                                                <div class="contact-information"
-                                                    style="{{ $is_private ? 'filter:blur(3px)' : '' }}">
-                                                    {{ $user->email }}
-                                                </div>
-                                                <div>
-                                                    <span>
-                                                        <i class="bx bx-chevron-right"></i>
-                                                    </span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!--@if ($user->address)
--->
-                                    <!--    <div class="row my-3">-->
-                                    <!--        <div class="col-2">-->
-                                    <!--            <i class="bx bx-map fs-4"></i>-->
-                                    <!--        </div>-->
-                                    <!--        <div class="col-10">-->
-                                    <!--            <a href="{{ $is_private ? 'javascript:void(0)' : 'https://maps.google.com/?q=  Toronto Ontario  Canada' }}"-->
-                                    <!--                style="{{ $is_private ? 'filter:blur(1.5rem)' : '' }}"-->
-                                    <!--                target="{{ $is_private ? '' : '_blank' }}"-->
-                                    <!--                class="d-flex justify-content-between text-decoration-none text-dark">-->
-                                    <!--                <div class="contact-information">-->
-                                    <!--                    {{ $user->address }}-->
-                                    <!--                </div>-->
-                                    <!--                <div>-->
-                                    <!--                    <span>-->
-                                    <!--                        <i class="bx bx-chevron-right"></i>-->
-                                    <!--                    </span>-->
-                                    <!--                </div>-->
-                                    <!--            </a>-->
-                                    <!--        </div>-->
-                                    <!--    </div>-->
-                                    <!--
-@endif-->
-                                </div>
-
-                                <!------------------------------------------ Contact Section Ended ----------------------------->
+                            <div class=".col-6 .col-md-4" style="padding: 0px;">
+                                <br>
+                                <button id="connectBTN" class="btn btn-block AddBtn rounded-pill px-4 py-3 "
+                                    style="background-color: white; color:black; margin-top:5px;">
+                                    <a target="_blank" style="text-decoration:none;color:black; " class="text-black"
+                                        href="https://www.bit.ly/39sWoAJ"><b>Create your own profile</b></a>
+                                </button> <br>
                             </div>
+                            <!-- butoni tod -->
+
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </section>
 
     <!-- Bootstrap script -->

@@ -8,7 +8,7 @@ h6,
 p {
   margin: 0;
   padding: 0;
- 
+
 }
 
 /* Hero_Section */
@@ -114,9 +114,9 @@ p {
   font-size: 10px !important;
   text-transform: capitalize !important;
 }
-         
-         
-         
+
+
+
 .btn-grad {
   background-image: linear-gradient(to right, #757F9A 0%, #D7DDE8  51%, #757F9A  100%);
   margin: 10px;
@@ -125,7 +125,7 @@ p {
   text-transform: uppercase;
   transition: 0.5s;
   background-size: 200% auto;
-  color: white;            
+  color: white;
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
   display: block;
@@ -233,6 +233,25 @@ a {
 .bx-chevron-right {
   font-size: 25px;
   color: #d4d4d4;
+}
+
+
+/* Button css */
+
+#connectBTN{
+    padding:10px;
+    border-radius: 20px;
+    font-size: 20px; margin-top:-45px;
+    margin-bottom:25px;
+    min-width:100px;
+    font-family: proxima-nova, Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    box-shadow: 6px 10px 25px 0 rgba(0, 0, 0, 0.13), 0 6px 20px 0 rgba(0, 0, 0, 0.13) !important;
+    border-color: white;
+    overflow: hidden;
+    color: #FFFFFF;
+    background-color: #FFFFFF;
+    width: 100%;
 }
 
 /* <!---------------------------------------------- Media Queries -----------------------------------------> */
