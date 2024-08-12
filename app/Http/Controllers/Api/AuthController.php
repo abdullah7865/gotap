@@ -236,22 +236,19 @@ class AuthController extends Controller
             'otp' => 'required|min:6',
         ]);
 
-        $token = DB::table('reset_tokens')->where('email', $validatedData['email'])->first();
+        $resetToken = DB::table('password_resets')->where('email', $validatedData['email'])->first();
 
-        if (!$token) {
-            return Response::json(['error' => 'You are unauthorized to change password'], 401);
+        if (!$resetToken) {
+            return response()->json(['error' => 'You are unauthorized to change the password'], 401);
         }
 
-        if (time() > $token->expiry + 1200) {
-            return Response::json(['error' => 'OTP is expired. You can only update the password within 20 minutes'], 400);
+        if ($resetToken->token != $validatedData['otp']) {
+            return response()->json(['error' => 'OTP is incorrect'], 400);
         }
 
-        if ($token->token != $validatedData['otp']) {
-            return Response::json(['error' => 'OTP is incorrect'], 400);
-        }
-
-        return Response::json(['message' => 'OTP is verified successfully!'], 200);
+        return response()->json(['message' => 'OTP is verified successfully!'], 200);
     }
+
 
     public function changePassword(ChangePasswordRequest $request)
     {

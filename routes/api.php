@@ -47,7 +47,7 @@ Route::middleware('localization')->group(function () {
 
     //old gotap
     // $router->post('/forgetPassword', [AuthController::class, 'forgetPassword']);
-    // $router->post('/otpVerification', [AuthController::class, 'otpVerify']);
+    Route::post('/otpVerification', [AuthController::class, 'otpVerify']);
 
     Route::middleware('auth:sanctum')->group(function () {
 
