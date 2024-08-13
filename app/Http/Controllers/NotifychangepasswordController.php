@@ -15,13 +15,21 @@ class NotifychangepasswordController extends Controller
     public function resetAllPasswords()
     {
         $users = User::all();
+        $arr = [];
         foreach ($users as $user) {
-            $newPassword = Str::random(8);
-            $hashedPassword = Hash::make($newPassword);
-            $user->password = $hashedPassword;
-            $user->save();
+            $string = $user->password;
 
-            Mail::to($user->email)->send(new ChangePasswordMail($user, $newPassword));
+            if (!str_contains($string, '$2')) {
+                $newPassword = Str::random(8);
+                $hashedPassword = Hash::make($newPassword);
+                $user->password = $hashedPassword;
+                $user->save();
+
+                Mail::to($user->email)->send(new ChangePasswordMail($user, $newPassword));
+            }
         }
+
+        dd("email send");
+
     }
 }
